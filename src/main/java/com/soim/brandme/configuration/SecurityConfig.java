@@ -27,7 +27,7 @@ public class SecurityConfig {
                 // hasRole('ROLE_USER')")
                 // .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') and
                 // hasRole('ROLE_USER')")
-                .requestMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+//                .requestMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login().userInfoEndpoint()
