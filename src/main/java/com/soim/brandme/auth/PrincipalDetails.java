@@ -33,6 +33,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         return user;
     }
 
+
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -42,6 +43,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public String getUsername() {
         return user.getUsername();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
