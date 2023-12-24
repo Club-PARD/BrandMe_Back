@@ -1,12 +1,9 @@
 package com.soim.brandme.user.presentation;
 
-import com.soim.brandme.user.Oauth2UserService;
-import com.soim.brandme.user.User;
+import com.soim.brandme.auth.application.Oauth2UserService;
+import com.soim.brandme.user.domain.User;
 import com.soim.brandme.user.application.UserService;
 import com.soim.brandme.user.presentation.request.UserRequest;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

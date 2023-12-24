@@ -1,6 +1,5 @@
-package com.soim.brandme.user;
+package com.soim.brandme.user.domain;
 
-import com.soim.brandme.user.presentation.request.UserRequest;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;

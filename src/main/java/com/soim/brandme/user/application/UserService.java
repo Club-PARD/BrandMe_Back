@@ -1,8 +1,8 @@
 package com.soim.brandme.user.application;
 
-import com.soim.brandme.user.User;
+import com.soim.brandme.user.domain.User;
 import com.soim.brandme.user.presentation.request.UserRequest;
-import com.soim.brandme.user.repo.UserRepo;
+import com.soim.brandme.user.domain.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
