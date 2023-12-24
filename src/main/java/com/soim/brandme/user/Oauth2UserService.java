@@ -28,7 +28,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest); //google의 회원정보를 받아온다.
 
         // code를 통해 구성한 정보
-        System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
+        // System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
         log.info("############OAUTH2USER############");
         // token을 통해 응답받은 회원정보
         log.info("oAuth2User : " + oAuth2User);
@@ -39,7 +39,6 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
 //        Attribute를 파싱해서 공통 객체로 묶는다. 관리가 편함.
         OAuth2UserInfo oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
-
         Optional<User> userOptional =
                 userRepo.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
@@ -57,15 +56,32 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
                     .role("ROLE_USER")
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
+                    .image(oAuth2UserInfo.getImage())
+                    .locale(oAuth2UserInfo.locale())
                     .build();
         }
         log.info("user : {}", user);
+        //  To Do :  email로 이미 있는 유저인지 검색 & DB에 저장
+       registerUser(user);
         return new PrincipalDetails(user, oAuth2User.getAttributes());
     }
-    @Transactional
-    public User saveUser(UserRequest userRequest) {
-        User ret = userRepo.save(User.from(userRequest));
-        return ret;
+
+    public UserRequest registerUser(User user) {
+        Optional<User> enterUser = userRepo.findByEmail(user.getEmail());
+        //DB에 저장
+        if(enterUser.isEmpty()){
+            userRepo.save(user);
+        } else {
+            User userExists = enterUser.get();
+            log.info("이미 존재하는 유저입니다. {}",userExists);
+        }
+        //controller에서 필요한 것은 이름,이메일,이미지가 있는 userRequest형식이므로 객체 만들어서 return해줌
+        return UserRequest.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .image(user.getImage())
+                .role(user.getRole())
+                .build();
     }
 
 }
