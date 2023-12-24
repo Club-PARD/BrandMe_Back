@@ -2,6 +2,7 @@ package com.soim.brandme.user.presentation;
 
 import com.soim.brandme.user.Oauth2UserService;
 import com.soim.brandme.user.User;
+import com.soim.brandme.user.application.UserService;
 import com.soim.brandme.user.presentation.request.UserRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,10 +18,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
     private final Oauth2UserService oauth2UserService;
+    private final UserService userService;
 
     @PostMapping("/user/login")
     public ResponseEntity<UserRequest> regusterUser(@RequestBody User user){
 //        프런트에 돌려주는 것은 UserRequest객체와 http상태
         return new ResponseEntity(oauth2UserService.registerUser(user), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user/{email}")
+    public ResponseEntity<UserRequest> getUser(@PathVariable String email){
+        return ResponseEntity.ok(userService.getUser(email));
     }
 }

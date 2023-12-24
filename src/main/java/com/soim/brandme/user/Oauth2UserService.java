@@ -80,7 +80,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .image(user.getImage())
-                .role(user.getRole())
+//                .role(user.getRole())
                 .build();
     }
 
