@@ -1,9 +1,8 @@
-package com.soim.brandme.controller;
+package com.soim.brandme.auth.presentation;
 
-import com.soim.brandme.service.LoginService;
+import com.soim.brandme.auth.application.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j

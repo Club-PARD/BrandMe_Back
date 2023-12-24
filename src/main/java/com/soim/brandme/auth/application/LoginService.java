@@ -1,4 +1,4 @@
-package com.soim.brandme.service;
+package com.soim.brandme.auth.application;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Value;

@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("http://localhost:3000") //어떤 origin 요청 허용할 것인지
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.DELETE.name(),
                         HttpMethod.PATCH.name()
                 )
-                .allowCredentials(true)
+                .allowCredentials(true) //서버가 응답할 때 js에서 처리할 수 있게 할것인지
                 .exposedHeaders("*");
     }
 

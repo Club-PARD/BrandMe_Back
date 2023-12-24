@@ -1,6 +1,6 @@
-package com.soim.brandme.auth;
+package com.soim.brandme.auth.application;
 
-import com.soim.brandme.user.User;
+import com.soim.brandme.user.domain.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

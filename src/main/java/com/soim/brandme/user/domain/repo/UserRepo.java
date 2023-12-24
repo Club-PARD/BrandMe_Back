@@ -1,6 +1,6 @@
-package com.soim.brandme.user.repo;
+package com.soim.brandme.user.domain.repo;
 
-import com.soim.brandme.user.User;
+import com.soim.brandme.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

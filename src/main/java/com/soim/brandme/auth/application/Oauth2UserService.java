@@ -1,11 +1,10 @@
-package com.soim.brandme.user;
+package com.soim.brandme.auth.application;
 
-import com.soim.brandme.auth.PrincipalDetails;
-import com.soim.brandme.user.GoogleUserInfo;
-import com.soim.brandme.user.OAuth2UserInfo;
-import com.soim.brandme.user.User;
+import com.soim.brandme.auth.domain.GoogleUserInfo;
+import com.soim.brandme.auth.domain.OAuth2UserInfo;
+import com.soim.brandme.user.domain.User;
 import com.soim.brandme.user.presentation.request.UserRequest;
-import com.soim.brandme.user.repo.UserRepo;
+import com.soim.brandme.user.domain.repo.UserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -13,7 +12,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 @Slf4j

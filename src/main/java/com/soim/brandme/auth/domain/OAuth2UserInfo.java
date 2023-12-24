@@ -1,4 +1,4 @@
-package com.soim.brandme.user;
+package com.soim.brandme.auth.domain;
 
 public interface OAuth2UserInfo {
     String getEmail();

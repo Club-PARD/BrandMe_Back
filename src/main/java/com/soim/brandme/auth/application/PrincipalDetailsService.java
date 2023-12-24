@@ -1,7 +1,7 @@
-package com.soim.brandme.auth;
+package com.soim.brandme.auth.application;
 
-import com.soim.brandme.user.User;
-import com.soim.brandme.user.repo.UserRepo;
+import com.soim.brandme.user.domain.User;
+import com.soim.brandme.user.domain.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
