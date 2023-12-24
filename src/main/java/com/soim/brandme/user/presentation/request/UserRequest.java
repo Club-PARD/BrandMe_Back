@@ -10,6 +10,6 @@ public class UserRequest {
     String name;
     String email;
     String image;
-    String role;
+//    String role;
 
 }
