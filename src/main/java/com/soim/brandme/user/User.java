@@ -20,22 +20,20 @@ public class User{
     @Column(nullable = false)
     private String email;
 
-//    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private String role;
     private String provider;
     private String providerId;
-    @Column
     private String image;
 
     private String password;
     private String username;
-
+    private String locale;
 
 
     @Builder
     public User(String name, String email, String role, String password,
-        String username,String provider, String providerId,String image) {
+        String username,String provider, String providerId,String image,String locale) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -44,20 +42,15 @@ public class User{
         this.provider = provider;
         this.providerId = providerId;
         this.image = image;
+        this.locale = locale;
     }
 
-    public User update(String name, String picture) {
+    public User update(String name, String picture,String email) {
         this.name = name;
+        this.email= email;
+        this.image = picture;
         return this;
     }
 
-    public static User from(UserRequest userRequest){
-        return User.builder()
-                .name(userRequest.getName())
-                .email(userRequest.getEmail())
-                .image(userRequest.getImage())
-                .role(userRequest.getRole())
-                .build();
-    }
 
 }

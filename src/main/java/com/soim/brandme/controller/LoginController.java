@@ -14,7 +14,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/code/{registrationId}")
-    public void socialLogin(@RequestParam String code, @PathVariable String registrationId) {
+    public void socialLogin(@RequestBody String code, @PathVariable String registrationId) {
         log.info(code);
         loginService.socialLogin(code, registrationId);
     }

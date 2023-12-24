@@ -5,4 +5,7 @@ public interface OAuth2UserInfo {
     String getName();
     String getProviderId();
     String getProvider();
+
+    String getImage();
+    String locale();
 }

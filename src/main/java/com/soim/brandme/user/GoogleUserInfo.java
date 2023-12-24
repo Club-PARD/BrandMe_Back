@@ -28,4 +28,15 @@ public class GoogleUserInfo implements OAuth2UserInfo{
     public String getProvider() {
         return "google";
     }
+
+    public String getImage() {
+        return (String) attributes.get("picture");
+    }
+
+    @Override
+    public String locale() {
+        return (String) attributes.get("locale");
+    }
+
+
 }
