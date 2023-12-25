@@ -70,8 +70,8 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
         if(enterUser.isEmpty()){
             userRepo.save(user);
         } else {
-            User userExists = enterUser.get();
-            log.info("이미 존재하는 유저입니다. {}",userExists);
+            User existingUser = enterUser.get();
+            log.info("이미 존재하는 유저입니다. {}",existingUser);
         }
         //controller에서 필요한 것은 이름,이메일,이미지가 있는 userRequest형식이므로 객체 만들어서 return해줌
         return UserRequest.builder()
