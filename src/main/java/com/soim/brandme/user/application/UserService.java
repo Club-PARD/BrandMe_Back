@@ -32,7 +32,8 @@ public class UserService {
         Optional<User> user = userRepo.findByEmail(userEmail);
         if (user.isPresent()) {
             User u = user.get();
-            u.update(userRequest.getName(), userRequest.getEmail());
+            u.update(userRequest.getName());
+            userRepo.save(u);
             return UserRequest.builder()
                     .name(u.getName())
                     .email(u.getEmail())

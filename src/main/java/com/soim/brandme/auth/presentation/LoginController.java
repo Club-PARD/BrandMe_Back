@@ -25,6 +25,5 @@ public class LoginController {
     public RedirectView redirectToGoogleOAuth(){
         log.info("google login접속");
         return new RedirectView("/oauth2/authorization/google");
-
     }
 }
