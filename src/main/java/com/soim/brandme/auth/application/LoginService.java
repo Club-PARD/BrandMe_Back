@@ -3,6 +3,7 @@ package com.soim.brandme.auth.application;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@PropertySource("classpath:application.properties")
 @Slf4j
 @Service
 public class LoginService {
@@ -22,9 +24,8 @@ public class LoginService {
         this.webClient = webClientBuilder.build();
     }
 
-    public void socialLogin(String code, String registrationId) {
-        log.info("Google login attempt with code: {} and registrationId: {}", code, registrationId);
-
+    public void socialLogin(String code) {
+        String registrationId = "google";
         try {
             String accessToken = getAccessToken(code, registrationId);
             log.info(" accessToken: {}", accessToken);
@@ -82,4 +83,8 @@ public class LoginService {
                 .bodyToMono(JsonNode.class);
     }
 
+    public void googleLogin() {
+        log.info("Google login attempt================================");
+
+    }
 }

@@ -2,9 +2,11 @@ package com.soim.brandme.auth.application;
 
 import com.soim.brandme.auth.domain.GoogleUserInfo;
 import com.soim.brandme.auth.domain.OAuth2UserInfo;
+import com.soim.brandme.user.application.UserService;
 import com.soim.brandme.user.domain.User;
 import com.soim.brandme.user.presentation.request.UserRequest;
 import com.soim.brandme.user.domain.repo.UserRepo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,9 +18,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class Oauth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private UserRepo userRepo;
+    private final UserService userService;
 
 //    userRequest는 code를 받아서 토큰을 발급받고, 토큰을 통해 회원정보를 가져오는 역할을 한다.
     @Override
@@ -59,8 +63,8 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
                     .build();
         }
         log.info("user : {}", user);
-        //  To Do :  email로 이미 있는 유저인지 검색 & DB에 저장
-       registerUser(user);
+       registerUser(user); //새로운 유저 db에 저장
+        returnUserInfoToFront(user); //프런트에 유저 정보 돌려줌
         return new PrincipalDetails(user, oAuth2User.getAttributes());
     }
 
@@ -73,12 +77,20 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
             User existingUser = enterUser.get();
             log.info("이미 존재하는 유저입니다. {}",existingUser);
         }
+        userService.getUser(user.getEmail());
         //controller에서 필요한 것은 이름,이메일,이미지가 있는 userRequest형식이므로 객체 만들어서 return해줌
         return UserRequest.builder()
                 .name(user.getName())
                 .email(user.getEmail())
-                .image(user.getImage())
 //                .role(user.getRole())
+                .build();
+    }
+
+// front에서 axios.get으로 유저를 oauth url로 이동시켜주면 이 메소드가 실행된다.
+    public UserRequest returnUserInfoToFront(User user) {
+        return UserRequest.builder()
+                .name(user.getName())
+                .email(user.getEmail())
                 .build();
     }
 

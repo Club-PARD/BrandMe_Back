@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000") //어떤 origin 요청 허용할 것인지
+                .allowedOrigins("/**") //어떤 origin 요청 허용할 것인지
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
