@@ -37,6 +37,7 @@ out/
 .vscode/
 
 application.properties
+env.properties
 .DS_Store
 ~
 ```
