@@ -44,10 +44,8 @@ public class User{
         this.locale = locale;
     }
 
-    public User update(String name, String picture,String email) {
+    public User update(String name) {
         this.name = name;
-        this.email= email;
-        this.image = picture;
         return this;
     }
 

@@ -9,7 +9,7 @@ import lombok.*;
 public class UserRequest {
     String name;
     String email;
-    String image;
+//    String image;
 //    String role;
 
 }
