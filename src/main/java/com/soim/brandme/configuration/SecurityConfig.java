@@ -37,7 +37,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http/*, RememberMeServices rememberMeServices*/) throws Exception {
-        http.csrf().disable();
+//        http.csrf().disable();
 //        http.rememberMe((remember) -> remember.rememberMeServices(rememberMeServices));
         http.authorizeRequests()
                 .requestMatchers("/user/**").permitAll()
@@ -48,19 +48,17 @@ public class SecurityConfig {
 //                .tokenValiditySeconds(604800) // 7일
 //                .alwaysRemember(false)
 //                .and()
-                .formLogin().disable() // formLogin을 사용하지 않겠다.
-                .httpBasic().disable() // httpBasic을 사용하지 않겠다.
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 사용하지 않겠다
-                .and()
-                .oauth2Login().userInfoEndpoint()
-                .userService(oauth2UserService)
-                .and()
+                .formLogin(form->form.disable()) // formLogin을 사용하지 않겠다.
+                .httpBasic(httpbasic->httpbasic.disable()) // httpBasic을 사용하지 않겠다.
+                .sessionManagement((session)->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않겠다
+                .oauth2Login(oauth2->oauth2.userInfoEndpoint(userInfo->userInfo.userService(this.oauth2UserService))
+//                .and()
                 .successHandler((request, response, authentication) -> {
                     String jwt = createJwt(authentication);
                     response.setHeader("Authorization", "Bearer " + jwt);
                     response.sendRedirect("http://localhost:3000/name");
                     decodeJwt(jwt);
-                });
+                }));
 
         return http.build();
     }

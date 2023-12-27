@@ -1,9 +1,12 @@
 package com.soim.brandme.user.domain;
 
 import jakarta.persistence.*;
+import jdk.jfr.Timestamp;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
 @NoArgsConstructor

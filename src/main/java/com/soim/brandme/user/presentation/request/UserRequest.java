@@ -2,6 +2,8 @@ package com.soim.brandme.user.presentation.request;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

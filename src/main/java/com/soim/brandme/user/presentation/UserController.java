@@ -41,6 +41,7 @@ public class UserController {
 
     @PatchMapping("/user/updateProfile")
     public ResponseEntity<UserRequest> updateProfile(@RequestBody UserRequest userRequest){
+        UserRequest updateUser = userService.updateProfile(userRequest);
         return new ResponseEntity(userService.updateProfile(userRequest), HttpStatus.OK);
     }
 
