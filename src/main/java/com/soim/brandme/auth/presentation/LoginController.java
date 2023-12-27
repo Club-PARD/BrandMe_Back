@@ -4,12 +4,14 @@ import com.soim.brandme.auth.application.LoginService;
 import com.soim.brandme.user.application.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@PropertySource("classpath:application.properties")
 @CrossOrigin(origins = "/**", allowedHeaders = "*")
 @RequestMapping(value = "/login", produces = "application/json")
 public class LoginController {
@@ -25,6 +27,6 @@ public class LoginController {
     @GetMapping("/google")
     public RedirectView redirectToGoogleOAuth(){
         log.info("google login접속");
-        return new RedirectView("/oauth2/authorization/google");
+        return new RedirectView("http://localhost:8080/oauth2/authorization/google");
     }
 }
