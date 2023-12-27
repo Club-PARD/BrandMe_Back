@@ -1,10 +1,12 @@
 package com.soim.brandme.chatRoom.domain;
 
+import com.soim.brandme.chatRoom.application.KeywordsConverter;
 import com.soim.brandme.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +24,8 @@ public class ChatRoom {
     private String wai;
     @Convert(converter = KeywordsConverter.class)
     private List<String> keywords;
+    @ElementCollection
+    private List<String> groupKeywords = new ArrayList<>();
 //    @Convert
 //    private String groupKeywords;
     private String onePager;

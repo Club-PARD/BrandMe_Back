@@ -10,6 +10,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "/**", allowedHeaders = "*")
 @RequestMapping(value = "/login", produces = "application/json")
 public class LoginController {
     private final LoginService loginService;
