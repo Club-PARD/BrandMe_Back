@@ -52,7 +52,7 @@ public class SecurityConfig {
 //                .formLogin(form->form.disable()) // formLogin을 사용하지 않겠다.
                 .httpBasic(httpbasic->httpbasic.disable()) // httpBasic을 사용하지 않겠다.
                 .sessionManagement((session)->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않겠다
-                .oauth2Login(oauth2->oauth2.loginPage("/login/google").userInfoEndpoint(userInfo->userInfo.userService(this.oauth2UserService))
+                .oauth2Login(oauth2->oauth2.loginPage("/login/google").userInfoEndpoint(userInfo->userInfo.userService(this.oauth2UserService)))
                 .formLogin(form->form.disable()) // formLogin을 사용하지 않겠다.
                 .httpBasic(httpbasic->httpbasic.disable()) // httpBasic을 사용하지 않겠다.
                 .sessionManagement((session)->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않겠다
