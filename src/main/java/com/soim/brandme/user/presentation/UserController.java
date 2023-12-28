@@ -39,10 +39,16 @@ public class UserController {
         return new ResponseEntity(oauth2UserService.registerUser(user), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/user/updateProfile")
-    public ResponseEntity<UserRequest> updateProfile(@RequestBody UserRequest userRequest){
-        UserRequest updateUser = userService.updateProfile(userRequest);
-        return new ResponseEntity(userService.updateProfile(userRequest), HttpStatus.OK);
+    @PatchMapping("/user/{userId}/updateProfile")
+    public ResponseEntity<UserRequest> updateProfile(@RequestBody UserRequest userRequest, @PathVariable Long userId){
+        UserRequest user = userService.updateProfile(userRequest);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}/myProfile")
+    public ResponseEntity<UserRequest> getMyProfile(@PathVariable Long userId){
+        UserRequest user = userService.myProfile(userId);
+        return ResponseEntity.ok(user);
     }
 
 //    프런트에서 axios.get으로 유저 구글로그인+ 유저 정보 요청하면 내가 redirect url로 이동시켜주고 거기서 유저 정보를 받아서 프런트에 보내줌
