@@ -22,8 +22,7 @@ public class User{
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String role;
+    private String role="ROLE_USER";
     private String provider;
     private String providerId;
     private String image;
@@ -40,7 +39,7 @@ public class User{
         this.email = email;
         this.password = password;
         this.username = username;
-        this.role = role;
+        this.role = (role != null) ? role : "ROLE_USER";
         this.provider = provider;
         this.providerId = providerId;
         this.image = image;

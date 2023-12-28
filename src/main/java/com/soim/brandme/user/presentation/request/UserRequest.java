@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class UserRequest {
     String name;
     String email;
-//    String image;
+    String picture;
 //    String role;
 
 }
