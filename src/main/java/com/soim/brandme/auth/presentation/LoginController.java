@@ -22,17 +22,17 @@ public class LoginController {
     private final LoginService loginService;
     private final UserService userService;
 
-    @GetMapping("/oauth2/code/{registrationId}")
+    @PostMapping("/oauth2/code/{registrationId}")
     public void socialLogin(@RequestBody String code, @PathVariable String registrationId) {
         log.info("Received OAuth2 code for registrationId: {}", registrationId);
         loginService.socialLogin(code);
     }
 
-//    @GetMapping("/google")
-//    public RedirectView redirectToGoogleOAuth(){
-//        log.info("google login접속");
-//        return new RedirectView("http://localhost:8080/oauth2/authorization/google");
-//    }
+    @GetMapping("/google")
+    public RedirectView redirectToGoogleOAuth(){
+        log.info("google login접속");
+        return new RedirectView("http://Soim-env.eba-v9sk9m3i.ap-northeast-2.elasticbeanstalk.com/oauth2/authorization/google");
+    }
 
     @PostMapping("/google")
     public ResponseEntity<Long> UserInfoFromFront(@RequestBody UserRequest userRequest){

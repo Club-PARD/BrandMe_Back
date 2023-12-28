@@ -21,10 +21,10 @@ public class ChatRoomController {
     public Long createChatRoom(@PathVariable Long userId){
         return chatRoomService.createChatRoom(userId);
     }
-//    @PostMapping("/{userId}/{chatRoomId}")
-//    public String saveWai(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody String wai){
-//        return chatRoomService.saveWai(userId,chatRoomId,wai);
-//    }
+    @PostMapping("/{userId}/{chatRoomId}/savewai")
+    public String saveWai(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody String wai){
+        return chatRoomService.saveWai(userId,chatRoomId,wai);
+    }
 
     @GetMapping("/{userId}/{chatRoomId}/myResult")
     public ResponseEntity<ResultResponse> getMyResult(@PathVariable Long userId, @PathVariable Long chatRoomId){
