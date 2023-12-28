@@ -24,7 +24,9 @@ public class ChatRoom {
     @JoinColumn(name = "user_id")
     private User user;
     private String wai;
-    @Convert(converter = KeywordsConverter.class)
+    @ElementCollection
+    @CollectionTable(name = "keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
+    @Column(name = "keyword")
     private List<String> keywords;
     @Convert(converter = KeywordsConverter.class)
     private List<String> answers;
