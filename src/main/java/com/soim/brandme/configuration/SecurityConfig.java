@@ -54,14 +54,14 @@ public class SecurityConfig {
 //                .and()
 //                .formLogin(form->form.disable()) // formLogin을 사용하지 않겠다.
                 .httpBasic(httpbasic->httpbasic.disable()) // httpBasic을 사용하지 않겠다.
-                .sessionManagement((session)->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // 세션을 사용하지 않겠다
-//                .oauth2Login(oauth2->oauth2.loginPage("/login/google").userInfoEndpoint(userInfo->userInfo.userService(this.oauth2UserService))
-//                .successHandler((request, response, authentication) -> {
-//                    String jwt = createJwt(authentication);
-//                    response.setHeader("Authorization", "Bearer " + jwt);
-//                    response.sendRedirect("http://localhost:3000/name");
-//                    decodeJwt(jwt);
-//                }));
+                .sessionManagement((session)->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않겠다
+                .oauth2Login(oauth2->oauth2.userInfoEndpoint(userInfo->userInfo.userService(this.oauth2UserService))
+                .successHandler((request, response, authentication) -> {
+                    String jwt = createJwt(authentication);
+                    response.setHeader("Authorization", "Bearer " + jwt);
+                    response.sendRedirect("http://localhost:3000/name");
+                    decodeJwt(jwt);
+                }));
 
         return http.build();
     }

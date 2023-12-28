@@ -37,17 +37,15 @@ public class ChatRoomService {
     }
 
     public String saveWai(Long userId,Long chatRoomId,String wai){
-        Optional<User> user = userRepo.findById(userId);
-        if(user.isPresent()){
-            User u = user.get();
+        User user = userRepo.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("해당 유저가 없습니다"));
 
-            ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).get();
-            chatRoom.setUser(u);
+        ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).orElseThrow(() ->
+                new IllegalArgumentException("해당 채팅방이 없습니다"));
+            chatRoom.setUser(user);
+            chatRoom.setWai(wai);
             chatRoom = chatRoomRepo.save(chatRoom);
             return chatRoom.getWai();
-        } else {
-            throw new IllegalArgumentException("해당 유저가 없습니다");
-        }
     }
 
     public ResultResponse getMyResult(Long userId, Long chatRoomId){
