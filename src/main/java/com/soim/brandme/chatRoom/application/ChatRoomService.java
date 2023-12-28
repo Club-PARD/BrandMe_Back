@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -60,5 +61,21 @@ public class ChatRoomService {
         } else {
             throw new IllegalArgumentException("해당 유저가 없습니다");
         }
+    }
+    public String saveKeywords(Long userId, Long chatRoomId, List<String> keywords) {
+        Optional<User> user = userRepo.findById(userId);
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("해당 유저가 없습니다");
+        }
+
+        Optional<ChatRoom> chatRoom = chatRoomRepo.findById(chatRoomId);
+        if (chatRoom.isEmpty()) {
+            throw new IllegalArgumentException("해당 채팅방이 없습니다");
+        }
+
+        ChatRoom c = chatRoom.get();
+        c.setKeywords(keywords);
+        chatRoomRepo.save(c);
+        return "keywords 저장 완료";
     }
 }

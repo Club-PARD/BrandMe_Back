@@ -9,6 +9,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @PropertySource("classpath:application.properties")
@@ -30,5 +32,10 @@ public class ChatRoomController {
     public ResponseEntity<ResultResponse> getMyResult(@PathVariable Long userId, @PathVariable Long chatRoomId){
        ResultResponse result = chatRoomService.getMyResult(userId,chatRoomId);
          return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/{userId}/{chatRoomId}/keywords")
+    public String saveKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> keywords){
+        return chatRoomService.saveKeywords(userId,chatRoomId,keywords);
     }
 }
