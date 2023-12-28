@@ -38,4 +38,21 @@ public class ChatRoomController {
     public String saveKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> keywords){
         return chatRoomService.saveKeywords(userId,chatRoomId,keywords);
     }
+
+    @PostMapping("/{userId}/{chatRoomId}/answers")
+    public List<String> saveAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> answers){
+        return chatRoomService.saveAnswers(userId,chatRoomId,answers);
+    }
+    @GetMapping("/{userId}/{chatRoomId}/answers")
+    public List<String> getAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId){
+        return chatRoomService.getAnswers(userId,chatRoomId);
+    }
+    @GetMapping("/{userId}/{chatRoomId}/wai")
+    public String getWai(@PathVariable Long userId, @PathVariable Long chatRoomId){
+        return chatRoomService.getWai(userId,chatRoomId);
+    }
+    @GetMapping("/{userId}/{chatRoomId}/keywords")
+    public List<String> getKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId){
+        return chatRoomService.getKeywords(userId,chatRoomId);
+    }
 }
