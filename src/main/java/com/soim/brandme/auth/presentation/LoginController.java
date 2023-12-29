@@ -1,6 +1,7 @@
 package com.soim.brandme.auth.presentation;
 
 import com.soim.brandme.auth.application.LoginService;
+import com.soim.brandme.auth.presentation.resonse.LoginResponse;
 import com.soim.brandme.user.application.UserService;
 import com.soim.brandme.user.presentation.request.UserRequest;
 import com.soim.brandme.user.presentation.response.UserResponse;
@@ -22,21 +23,20 @@ public class LoginController {
     private final LoginService loginService;
     private final UserService userService;
 
-    @PostMapping("/oauth2/code/{registrationId}")
-    public void socialLogin(@RequestBody String code, @PathVariable String registrationId) {
-        log.info("Received OAuth2 code for registrationId: {}", registrationId);
-        loginService.socialLogin(code);
-    }
+//    @PostMapping("/oauth2/code/{registrationId}")
+//    public void socialLogin(@RequestBody String code, @PathVariable String registrationId) {
+//        log.info("Received OAuth2 code for registrationId: {}", registrationId);
+//        loginService.socialLogin(code);
+//    }
 
-    @GetMapping("/google")
-    public RedirectView redirectToGoogleOAuth(){
-        log.info("google login접속");
-        return new RedirectView("http://Soim-env.eba-v9sk9m3i.ap-northeast-2.elasticbeanstalk.com/oauth2/authorization/google");
-    }
+//    @GetMapping("/google")
+//    public RedirectView redirectToGoogleOAuth(){
+//        log.info("google login접속");
+//        return new RedirectView("http://Soim-env.eba-v9sk9m3i.ap-northeast-2.elasticbeanstalk.com/oauth2/authorization/google");
+//    }
 
     @PostMapping("/google")
-    public ResponseEntity<Long> UserInfoFromFront(@RequestBody UserRequest userRequest){
-        log.info("프런트에서 오는 유저 정보 : " + userRequest);
-        return new ResponseEntity(userService.UserInfoFromFront(userRequest), HttpStatus.OK);
+    public ResponseEntity<LoginResponse> UserInfoFromFront(@RequestBody UserRequest userRequest){
+        return new ResponseEntity<>(userService.UserInfoFromFront(userRequest), HttpStatus.OK);
     }
 }

@@ -41,8 +41,8 @@ public class ChatRoom {
     private String card;
 
     @Builder
-    public ChatRoom(Long chatRoomId,User user, String wai, List<String> keywords, List<String> answers, Map<String, String> groupKeywords,String onePager) {
-       this.chatRoomId = chatRoomId;
+    public ChatRoom(Long id,User user, String wai, List<String> keywords, List<String> answers, Map<String, String> groupKeywords,String onePager) {
+       this.chatRoomId = id;
         this.user = user;
         this.wai = wai;
         this.keywords = keywords;
