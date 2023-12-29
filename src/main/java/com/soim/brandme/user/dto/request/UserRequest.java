@@ -12,6 +12,7 @@ public class UserRequest {
     String name;
     String email;
     String picture;
+    String username;
 //    String role;
 
 }

@@ -44,7 +44,7 @@ public class User{
         this.email = email;
         this.password = password;
         this.username = username;
-        this.firstLogin = (firstLogin != null) ? firstLogin : false;
+        this.firstLogin = (firstLogin != null) ? firstLogin : true;
         this.role = (role != null) ? role : "ROLE_USER";
         this.provider = provider;
         this.providerId = providerId;

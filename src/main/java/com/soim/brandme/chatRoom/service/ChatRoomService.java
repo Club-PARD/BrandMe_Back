@@ -94,12 +94,14 @@ public class ChatRoomService {
             throw new IllegalArgumentException("해당 유저가 없습니다");
         }
     }
-    public Map<Long,List<String>> saveGroupKeywords(Long userId,Long chatRoomId,Map<Long,List<String>> groupKeywords){
-        Optional<User> user = userRepo.findById(userId);
-        if(user.isPresent()){
-            User u = user.get();
-        }
-    }
+//    public Map<Long,List<String>> saveGroupKeywords(Long userId,Long chatRoomId,Map<Long,List<String>> groupKeywords){
+//        Optional<User> user = userRepo.findById(userId);
+//        if(user.isPresent()){
+//            User u = user.get();
+//            ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).get();
+//            chatRoom.setGroupKeywords(groupKeywords);
+//        }
+//    }
     public List<String> saveAnswers(Long userId, Long chatRoomId, List<String> answers) {
         Optional<User> user = userRepo.findById(userId);
         if (user.isEmpty()) {

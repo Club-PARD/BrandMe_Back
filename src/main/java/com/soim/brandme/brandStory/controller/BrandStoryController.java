@@ -14,9 +14,9 @@ import java.util.List;
 public class BrandStoryController {
     private final BrandStoryService brandStoryService;
 
-    @PostMapping("/{userId}/{chatRoomId}/addResources")
-    public List<String> addResource(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> resorces){
-
-
-    }
+//    @PostMapping("/{userId}/{chatRoomId}/addResources")
+//    public List<String> addResource(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> resorces){
+//
+//
+//    }
 }
