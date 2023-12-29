@@ -3,6 +3,7 @@ package com.soim.brandme.chatRoom.entity;
 import com.soim.brandme.chatRoom.application.KeywordsConverter;
 import com.soim.brandme.user.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,24 +30,24 @@ public class ChatRoom {
     private List<String> keywords;
     @Convert(converter = KeywordsConverter.class)
     private List<String> answers;
-    @ElementCollection
-    @CollectionTable(name = "group_keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
-    @MapKeyColumn(name = "keyword_key")
-    @Column(name = "keyword_value")
-    Map<String, String> groupKeywords;
+//    @ElementCollection
+//    @CollectionTable(name = "group_keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
+//    @MapKeyColumn(name = "keyword_key")
+//    @Column(name = "keyword_value")
+//    Map<Long, List<String>> groupKeywords;
 //    @Convert
 //    private String groupKeywords;
     private String onePager;
     private String card;
 
     @Builder
-    public ChatRoom(Long id,User user, String wai, List<String> keywords, List<String> answers, Map<String, String> groupKeywords,String onePager) {
+    public ChatRoom(Long id,User user, String wai, List<String> keywords, List<String> answers,String onePager) {
        this.chatRoomId = id;
         this.user = user;
         this.wai = wai;
         this.keywords = keywords;
         this.answers = answers;
-        this.groupKeywords = groupKeywords;
+//        this.groupKeywords = groupKeywords;
         this.onePager = onePager;
     }
 

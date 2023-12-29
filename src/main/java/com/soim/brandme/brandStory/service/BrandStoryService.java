@@ -16,16 +16,16 @@ public class BrandStoryService {
     private final BrandStoryRepo brandStoryRepo;
     private final UserRepo userRepo;
 
-   public List<String> addResource(Long userId, Long chatRoomId,List<String> resources){
-       Optional<User> user = userRepo.findById(userId);
-       if(user.isPresent()){
-           User u = user.get();
-           Optional<ChatRoom> chatRoom = u.getChatRooms().stream()
-                   .filter(c -> c.getChatRoomId().equals(chatRoomId)).findFirst();
-              if(chatRoom.isPresent(){
-                  ChatRoom c = chatRoom.get();
-                  c.s
-           }
-       }
-   }
+//   public List<String> addResource(Long userId, Long chatRoomId,List<String> resources){
+//       Optional<User> user = userRepo.findById(userId);
+//       if(user.isPresent()){
+//           User u = user.get();
+//           Optional<ChatRoom> chatRoom = u.getChatRooms().stream()
+//                   .filter(c -> c.getChatRoomId().equals(chatRoomId)).findFirst();
+//              if(chatRoom.isPresent(){
+//                  ChatRoom c = chatRoom.get();
+//                  c.s
+//           }
+//       }
+//   }
 }
