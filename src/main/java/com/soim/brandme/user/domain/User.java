@@ -1,5 +1,7 @@
 package com.soim.brandme.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.soim.brandme.chatRoom.domain.ChatRoom;
 import jakarta.persistence.*;
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
@@ -7,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,24 +31,29 @@ public class User{
     private String provider;
     private String providerId;
     private String image;
-
+    private boolean firstLogin;
     private String password;
     private String username;
     private String locale;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY,mappedBy = "user")
+    private List<ChatRoom> chatRooms = new ArrayList<>();
 
 
     @Builder
-    public User(String name, String email, String role, String password,
-        String username,String provider, String providerId,String image,String locale) {
+    public User(String name, String email, String role, String password, Boolean firstLogin,
+        String username,String provider, String providerId,String image,String locale,List<ChatRoom> chatRooms) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.username = username;
+        this.firstLogin = (firstLogin != null) ? firstLogin : false;
         this.role = (role != null) ? role : "ROLE_USER";
         this.provider = provider;
         this.providerId = providerId;
         this.image = image;
         this.locale = locale;
+        this.chatRooms = chatRooms;
     }
 
     public User update(String name) {
