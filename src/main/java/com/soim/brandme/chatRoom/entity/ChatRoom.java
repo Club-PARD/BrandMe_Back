@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soim.brandme.brandCard.entity.BrandCard;
 import com.soim.brandme.brandStory.entity.BrandStory;
+import com.soim.brandme.chatRoom.application.GroupKeywordsMapConverter;
 import com.soim.brandme.chatRoom.application.KeywordsConverter;
 import com.soim.brandme.user.entity.User;
 import jakarta.persistence.*;
@@ -40,12 +41,14 @@ public class ChatRoom {
     @OneToOne(mappedBy="chatRoom", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference
     private BrandCard brandCard;
+
 //    @ElementCollection
 //    @CollectionTable(name = "group_keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
 //    @MapKeyColumn(name = "keyword_key")
 //    @Column(name = "keyword_value")
 //    Map<Long, List<String>> groupKeywords;
-//    @Convert
+
+//    @Convert(converter = GroupKeywordsMapConverter.class)
 //    private String groupKeywords;
 
 

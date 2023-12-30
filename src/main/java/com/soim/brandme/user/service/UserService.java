@@ -98,15 +98,15 @@ public class UserService {
         Optional<User> user = userRepo.findById(userId);
         if(user.isPresent()){
             User u = user.get();
-            if(nickname==null || nickname.isEmpty()){
-                u.setName(nickname);
+            if(nickname!=null){
+                u.setUsername(nickname);
                 userRepo.save(u);
                 return NicknameResponse.builder()
                         .name(u.getName())
                         .email(u.getEmail())
                         .image(u.getImage())
                         .username(u.getUsername())
-                        .firstLogin(true)
+                        .firstLogin(false)
                         .build();
             } else {
                 return NicknameResponse.builder()
@@ -114,7 +114,7 @@ public class UserService {
                         .email(u.getEmail())
                         .image(u.getImage())
                         .username(u.getUsername())
-                        .firstLogin(false)
+                        .firstLogin(true)
                         .build();
             }
         } else {
@@ -152,10 +152,12 @@ public class UserService {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
             User u = user.get();
+            log.info("nickname : " + u.getUsername());
             return AllResultResponse.builder()
                     .userId(u.getId())
                     .name(u.getName())
                     .email(u.getEmail())
+                    .nickname(u.getUsername())
                     .chatRooms(u.getChatRooms())
                     .build();
         } else {
