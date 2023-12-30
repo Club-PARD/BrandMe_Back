@@ -22,9 +22,9 @@ public class ChatRoomController {
     public Long createChatRoom(@PathVariable Long userId){
         return chatRoomService.createChatRoom(userId);
     }
-    @PostMapping("/{userId}/{chatRoomId}/savewai")
-    public String saveWai(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody String wai){
-        return chatRoomService.saveWai(userId,chatRoomId,wai);
+    @PostMapping("/{userId}/{chatRoomId}/saveChatNickName")
+    public String saveChatNickName(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody String chatNickName){
+        return chatRoomService.saveChatNickName(userId,chatRoomId,chatNickName);
     }
 
     @GetMapping("/{userId}/{chatRoomId}/myResult")
@@ -46,9 +46,9 @@ public class ChatRoomController {
     public List<String> getAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId){
         return chatRoomService.getAnswers(userId,chatRoomId);
     }
-    @GetMapping("/{userId}/{chatRoomId}/wai")
-    public String getWai(@PathVariable Long userId, @PathVariable Long chatRoomId){
-        return chatRoomService.getWai(userId,chatRoomId);
+    @GetMapping("/{userId}/{chatRoomId}/chatNickName")
+    public String getChatNickName(@PathVariable Long userId, @PathVariable Long chatRoomId){
+        return chatRoomService.getChatNickName(userId,chatRoomId);
     }
     @GetMapping("/{userId}/{chatRoomId}/keywords")
     public List<String> getKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId){

@@ -35,24 +35,24 @@ public class ChatRoomService {
             throw new IllegalArgumentException("해당 유저가 없습니다");
         }
     }
-    public String saveWai(Long userId,Long chatRoomId,String wai){
+    public String saveChatNickName(Long userId,Long chatRoomId,String chatNickName){
         User user = userRepo.findById(userId).orElseThrow(() ->
                 new IllegalArgumentException("해당 유저가 없습니다"));
 
         ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).orElseThrow(() ->
                 new IllegalArgumentException("해당 채팅방이 없습니다"));
             chatRoom.setUser(user);
-            chatRoom.setWai(wai);
+            chatRoom.setChatNickName(chatNickName);
             chatRoom = chatRoomRepo.save(chatRoom);
-            return chatRoom.getWai();
+            return chatRoom.getChatNickName();
     }
-    public String getWai(Long userId,Long chatRoomId){
+    public String getChatNickName(Long userId,Long chatRoomId){
         User user = userRepo.findById(userId).orElseThrow(() ->
                 new IllegalArgumentException("해당 유저가 없습니다"));
 
         ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).orElseThrow(() ->
                 new IllegalArgumentException("해당 채팅방이 없습니다"));
-        return chatRoom.getWai();
+        return chatRoom.getChatNickName();
     }
     public String saveKeywords(Long userId, Long chatRoomId, List<String> keywords) {
         Optional<User> user = userRepo.findById(userId);
@@ -86,7 +86,7 @@ public class ChatRoomService {
             ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).get();
             return ResultResponse.builder()
                     .chatRoomId(chatRoom.getChatRoomId())
-                    .wai(chatRoom.getWai())
+                    .chatNickName(chatRoom.getChatNickName())
                     .keywords(chatRoom.getKeywords())
                     .answers(chatRoom.getAnswers())
                     .brandCard(chatRoom.getBrandCard())
