@@ -1,18 +1,23 @@
 package com.soim.brandme.brandStory.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class BrandStory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long brandStoryId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
     @ElementCollection
@@ -28,4 +33,13 @@ public class BrandStory {
     @CollectionTable(name = "niches", joinColumns = @JoinColumn(name = "brand_story_id"))
     @Column(name = "niche")
     private List<String> niches;
+
+        @Builder
+        public BrandStory(ChatRoom chatRoom, List<String> resources, String slogan, List<String> suggestions, List<String> niches) {
+        this.chatRoom = chatRoom;
+        this.resources = resources;
+        this.slogan = slogan;
+        this.suggestions = suggestions;
+        this.niches = niches;
+    }
 }

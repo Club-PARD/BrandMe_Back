@@ -1,6 +1,7 @@
 package com.soim.brandme.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -32,7 +33,7 @@ public class User{
     private String password;
     private String username;
     private String locale;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY,mappedBy = "user")
     private List<ChatRoom> chatRooms = new ArrayList<>();
 

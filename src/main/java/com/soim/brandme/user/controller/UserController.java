@@ -2,6 +2,7 @@ package com.soim.brandme.user.controller;
 
 import com.soim.brandme.auth.service.LoginService;
 import com.soim.brandme.auth.service.Oauth2UserService;
+import com.soim.brandme.user.dto.response.AllResultResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.service.UserService;
 import com.soim.brandme.user.dto.request.UserRequest;
@@ -51,6 +52,11 @@ public class UserController {
     @PostMapping("/user/{userId}/saveNickname")
     public ResponseEntity<NicknameResponse> saveNickname(@PathVariable Long userId, @RequestBody String nickname){
         NicknameResponse ret = userService.saveNickname(userId,nickname);
+        return new ResponseEntity<>(ret,HttpStatus.OK);
+    }
+    @GetMapping("/user/{userId}/allResults")
+    public ResponseEntity<AllResultResponse> allResults(@PathVariable Long userId){
+        AllResultResponse ret = userService.allMyResult(userId);
         return new ResponseEntity<>(ret,HttpStatus.OK);
     }
 //    @GetMapping("/user/{userId}/allMyAnswers")

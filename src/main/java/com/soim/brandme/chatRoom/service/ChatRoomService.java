@@ -89,6 +89,8 @@ public class ChatRoomService {
                     .wai(chatRoom.getWai())
                     .keywords(chatRoom.getKeywords())
                     .answers(chatRoom.getAnswers())
+                    .brandCard(chatRoom.getBrandCard())
+                    .brandStory(chatRoom.getBrandStory())
                     .build();
         } else {
             throw new IllegalArgumentException("해당 유저가 없습니다");
