@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 public class ResultResponse {
     private Long chatRoomId;
-    private String wai;
+    private String chatNickName;
     private List<String> keywords;
     private List<String> answers;
     private BrandCard brandCard;

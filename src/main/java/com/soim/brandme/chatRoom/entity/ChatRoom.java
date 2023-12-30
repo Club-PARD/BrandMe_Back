@@ -28,7 +28,7 @@ public class ChatRoom {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    private String wai;
+    private String chatNickName;
     @ElementCollection
     @CollectionTable(name = "keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
     @Column(name = "keyword")
@@ -53,10 +53,10 @@ public class ChatRoom {
 
 
     @Builder
-    public ChatRoom(Long id,User user, String wai, List<String> keywords, List<String> answers, BrandCard brandCard, BrandStory brandStory) {
+    public ChatRoom(Long id,User user, String chatNickName, List<String> keywords, List<String> answers, BrandCard brandCard, BrandStory brandStory) {
        this.chatRoomId = id;
         this.user = user;
-        this.wai = wai;
+        this.chatNickName = chatNickName;
         this.keywords = keywords;
         this.answers = answers;
 //        this.groupKeywords = groupKeywords;
