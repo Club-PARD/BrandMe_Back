@@ -2,6 +2,7 @@ package com.soim.brandme.user.service;
 
 import com.soim.brandme.auth.dto.resonse.LoginResponse;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
+import com.soim.brandme.user.dto.response.AllResultResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.dto.request.UserRequest;
@@ -143,6 +144,20 @@ public class UserService {
                 }
             }
             return answers;
+        } else {
+            throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
+        }
+    }
+    public AllResultResponse allMyResult(Long id) {
+        Optional<User> user = userRepo.findById(id);
+        if (user.isPresent()) {
+            User u = user.get();
+            return AllResultResponse.builder()
+                    .userId(u.getId())
+                    .name(u.getName())
+                    .email(u.getEmail())
+                    .chatRooms(u.getChatRooms())
+                    .build();
         } else {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
         }
