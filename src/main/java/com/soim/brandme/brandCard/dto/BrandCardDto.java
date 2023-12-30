@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 public class BrandCardDto {
     private String brandJob;
-    private List<String> jobDetails;
+    private String jobDetail;
 }

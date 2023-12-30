@@ -33,16 +33,6 @@ public class UserService {
         }
     }
 
-    public User findUserId(Long id){
-        Optional<User> user = userRepo.findById(id);
-        if(user.isPresent()){
-            User u = user.get();
-            return u;
-        } else {
-            throw new UsernameNotFoundException("해당 user id로 등록된 계정이 없습니다");
-        }
-    }
-
     public UserRequest updateProfile(UserRequest userRequest) {
         Optional<User> user = userRepo.findByEmail(userRequest.getEmail());
         if (user.isPresent()) {
@@ -133,15 +123,15 @@ public class UserService {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
         }
     }
-    public Map<Long,String> allMyAnswers(Long id) {
+    public Map<Long,List<String>> allMyAnswers(Long id) {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
             User u = user.get();
-            Map<Long, String> answers = new LinkedHashMap<>();
+            Map<Long, List<String>> answers = new LinkedHashMap<>();
             for (ChatRoom chatRoom : u.getChatRooms()) {
-                for (String answer : chatRoom.getAnswers()) {
-                    answers.put(chatRoom.getChatRoomId(), answer);
-                }
+                List<String> chatRoomAnswers = answers.computeIfAbsent(chatRoom.getChatRoomId(), k -> new ArrayList<>());
+                // 현재 채팅방의 답변을 리스트에 추가
+                chatRoomAnswers.addAll(chatRoom.getAnswers());
             }
             return answers;
         } else {

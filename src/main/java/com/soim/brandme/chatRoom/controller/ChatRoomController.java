@@ -5,6 +5,7 @@ import com.soim.brandme.chatRoom.dto.request.ResultResponse;
 import com.soim.brandme.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +40,9 @@ public class ChatRoomController {
     }
 
     @PostMapping("/{userId}/{chatRoomId}/answers")
-    public List<String> saveAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> answers){
-        return chatRoomService.saveAnswers(userId,chatRoomId,answers);
+    public ResponseEntity<List<String>> saveAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> answers){
+        List<String> ret = chatRoomService.saveAnswers(userId,chatRoomId,answers);
+        return ResponseEntity.ok(ret);
     }
     @GetMapping("/{userId}/{chatRoomId}/answers")
     public List<String> getAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId){
