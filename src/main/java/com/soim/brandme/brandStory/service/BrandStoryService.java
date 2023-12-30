@@ -33,6 +33,7 @@ public class BrandStoryService {
                     .suggestions(brandStoryDto.getSuggestions())
                     .niches(brandStoryDto.getNiches())
                     .build();
+            brandStory.setChatRoom(c);
             brandStoryRepo.save(brandStory);
             return BrandStoryDto.builder()
                     .resources(brandStory.getResources())

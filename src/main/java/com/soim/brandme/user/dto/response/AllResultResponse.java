@@ -13,4 +13,5 @@ public class AllResultResponse {
     String name;
     String email;
     List<ChatRoom> chatRooms;
+    String nickname;
 }
