@@ -1,13 +1,15 @@
 package com.soim.brandme.brandCard.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BrandCardDto {
-    private String brandJob;
-    private String jobDetail;
+    String identity;
+    String identity_explaination;
 }

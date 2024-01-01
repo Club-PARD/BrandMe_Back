@@ -49,14 +49,13 @@ public class ChatRoom {
     
     @Builder
     public ChatRoom(Long id, User user, String chatNickName, List<String> keywords, List<String> answers, int progress,
-                 BrandStory brandStory,boolean finishChat,BrandCard brandCard, Map<String,EmbedGroupKeyword> groupKeywords) {
+                 BrandStory brandStory,boolean finishChat, Map<String,EmbedGroupKeyword> groupKeywords) {
        this.chatRoomId = id;
         this.user = user;
         this.chatNickName = chatNickName;
         this.keywords = keywords;
         this.finishChat = finishChat;
         this.answers = answers;
-        this.brandCard = brandCard;
         this.brandStory = brandStory;
         this.groupKeywords = groupKeywords;
         this.progress = progress;

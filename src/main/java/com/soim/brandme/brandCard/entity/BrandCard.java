@@ -3,35 +3,21 @@ package com.soim.brandme.brandCard.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Data
+@Builder
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 public class BrandCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long brandCardId;
-    @JsonBackReference
+    private String identity;
+    private String identity_explaination;
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
-    private String brandJob;
-    private String jobDetail;
-//    @ElementCollection
-//    @CollectionTable(name = "jobDetails", joinColumns = @JoinColumn(name = "brand_card_id"))
-//    @Column(name = "detail")
-//    private List<String> jobDetails;
-
-    @Builder
-    public BrandCard(String brandJob, String jobDetail) {
-        this.brandJob = brandJob;
-        this.jobDetail = jobDetail;
-    }
 }

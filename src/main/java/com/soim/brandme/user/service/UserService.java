@@ -58,14 +58,11 @@ public class UserService {
             if((user.getUsername())!=null){ //nickname까지 있다?
                 user.setFirstLogin(false); //첫 로그인이 아니다
                 log.info("존재하는 user : " + user);
-                return LoginResponse.builder()
-                        .userId(user.getId())
-                        .firstLogin(false)
-                        .build();
             } //nickname이 없다면
+            log.info("존재하는 user : " + user);
             return LoginResponse.builder()
                     .userId(user.getId())
-                    .firstLogin(true)
+                    .firstLogin(user.isFirstLogin())
                     .build();
         } else { //login을 처음 한다면
             if((userRequest.getEmail()!=null) && (userRequest.getEmail().contains("@"))) {
@@ -138,7 +135,6 @@ public class UserService {
                                     .chatNickName(chatRoom.getChatNickName())
                                     .keywords(chatRoom.getKeywords())
                                     .answers(chatRoom.getAnswers())
-                                    .brandCard(chatRoom.getBrandCard())
                                     .brandStory(chatRoom.getBrandStory())
                                     .build())
                             .collect(Collectors.toList())).build();
