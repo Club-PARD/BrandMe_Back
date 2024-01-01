@@ -1,14 +1,9 @@
 package com.soim.brandme.user.service;
 
 import com.soim.brandme.auth.dto.resonse.LoginResponse;
-import com.soim.brandme.brandCard.dto.CardDtoForEntity;
-import com.soim.brandme.brandCard.entity.BrandCard;
-import com.soim.brandme.brandStory.dto.StoryDtoForEntity;
-import com.soim.brandme.brandStory.entity.BrandStory;
 import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
 import com.soim.brandme.user.dto.response.AllResultResponse;
-import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.dto.request.UserRequest;
 import com.soim.brandme.user.repo.UserRepo;
@@ -133,48 +128,56 @@ public class UserService {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
             User u = user.get();
-            List<ChatRoomDto> chatRoomDtos = u.getChatRooms().stream()
-                    .map(this::converToChatRoomDto)
-                    .toList();
             return AllResultResponse.builder()
                     .userId(u.getId())
-                    .name(u.getName())
-                    .email(u.getEmail())
                     .nickname(u.getUsername())
-                    .chatRooms(chatRoomDtos)
-                    .build();
+                    .email(u.getEmail())
+                    .chatRooms(u.getChatRooms().stream()
+                            .map(chatRoom -> ChatRoomDto.builder()
+                                    .chatRoomId(chatRoom.getChatRoomId())
+                                    .chatNickName(chatRoom.getChatNickName())
+                                    .keywords(chatRoom.getKeywords())
+                                    .answers(chatRoom.getAnswers())
+                                    .brandCard(chatRoom.getBrandCard())
+                                    .brandStory(chatRoom.getBrandStory())
+                                    .build())
+                            .collect(Collectors.toList())).build();
+
+
         } else {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
         }
     }
-    public ChatRoomDto converToChatRoomDto(ChatRoom chatRoom){
-        return ChatRoomDto.builder()
-                .chatRoomId(chatRoom.getChatRoomId())
-                .userId(chatRoom.getUser() != null ? chatRoom.getUser().getId() : null)
-                .chatNickName(chatRoom.getChatNickName())
-                .keywords(new ArrayList<>(chatRoom.getKeywords()))
-                .answers(new ArrayList<>(chatRoom.getAnswers()))
-                .brandStory(convertToBrandStoryDto(chatRoom.getBrandStory()))
-                .brandCard(convertToBrandCardDto(chatRoom.getBrandCard()))
-                .build();
-    }
-    public StoryDtoForEntity convertToBrandStoryDto(BrandStory brandStory) {
-        if (brandStory == null) return null;
-        return StoryDtoForEntity.builder()
-                .brandStoryId(brandStory.getBrandStoryId())
-                .resources(new ArrayList<>(brandStory.getResources()))
-                .slogan(brandStory.getSlogan())
-                .suggestions(new ArrayList<>(brandStory.getSuggestions()))
-                .niches(new ArrayList<>(brandStory.getNiches()))
-                .build();
-    }
-
-    public CardDtoForEntity convertToBrandCardDto(BrandCard brandCard) {
-        if (brandCard == null) return null;
-        return CardDtoForEntity.builder()
-                .brandCardId(brandCard.getBrandCardId())
-                .brandJob(brandCard.getBrandJob())
-                .jobDetail(brandCard.getJobDetail())
-                .build();
-    }
+//    public ChatRoomDto converToChatRoomDto(ChatRoom chatRoom){
+//        return ChatRoomDto.builder()
+//                .chatRoomId(chatRoom.getChatRoomId())
+//                .userId(chatRoom.getUser() != null ? chatRoom.getUser().getId() : null)
+//                .chatNickName(chatRoom.getChatNickName())
+//                .keywords(new ArrayList<>(chatRoom.getKeywords()))
+//                .answers(new ArrayList<>(chatRoom.getAnswers()))
+//                .brandCard(chatRoom.getBrandCard())
+//                .brandStory(chatRoom.getBrandStory())
+//                .build();
+//    }
+//    public StoryDtoForEntity convertToBrandStoryDto(BrandStory brandStory) {
+//        if (brandStory == null) return null;
+//        return StoryDtoForEntity.builder()
+//                .brandStoryId(brandStory.getBrandStoryId())
+//                .resources(brandStory.getResources())
+//                .storyText(brandStory.getStoryText())
+//                .storyTitle(brandStory.getStoryTitle())
+//                .brandKeywords(brandStory.getBrandKeywords())
+//                .target(brandStory.getTarget())
+//                .suggestions(brandStory.getSuggestions())
+//                .build();
+//    }
+//
+//    public CardDtoForEntity convertToBrandCardDto(BrandCard brandCard) {
+//        if (brandCard == null) return null;
+//        return CardDtoForEntity.builder()
+//                .brandCardId(brandCard.getBrandCardId())
+//                .brandJob(brandCard.getBrandJob())
+//                .jobDetail(brandCard.getJobDetail())
+//                .build();
+//    }
 }

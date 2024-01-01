@@ -1,13 +1,10 @@
 package com.soim.brandme.chatRoom.service;
 
-import com.soim.brandme.brandCard.dto.CardDtoForEntity;
-import com.soim.brandme.brandCard.entity.BrandCard;
-import com.soim.brandme.brandStory.dto.StoryDtoForEntity;
-import com.soim.brandme.brandStory.entity.BrandStory;
 import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
+import com.soim.brandme.chatRoom.dto.request.DraftDto;
 import com.soim.brandme.chatRoom.dto.request.GroupKeywordRequest;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
-import com.soim.brandme.chatRoom.entity.GroupKeyword;
+import com.soim.brandme.chatRoom.entity.EmbedGroupKeyword;
 import com.soim.brandme.chatRoom.repo.ChatRoomRepo;
 import com.soim.brandme.chatRoom.dto.response.ResultResponse;
 import com.soim.brandme.user.entity.User;
@@ -17,11 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -31,35 +24,57 @@ public class ChatRoomService {
     private final ChatRoomRepo chatRoomRepo;
     private final UserRepo userRepo;
 
-    public ChatRoomDto converToChatRoomDto(ChatRoom chatRoom){
-        return ChatRoomDto.builder()
-                .chatRoomId(chatRoom.getChatRoomId())
-                .userId(chatRoom.getUser() != null ? chatRoom.getUser().getId() : null)
-                .chatNickName(chatRoom.getChatNickName())
-                .keywords(new ArrayList<>(chatRoom.getKeywords()))
-                .answers(new ArrayList<>(chatRoom.getAnswers()))
-                .brandStory(convertToBrandStoryDto(chatRoom.getBrandStory()))
-                .brandCard(convertToBrandCardDto(chatRoom.getBrandCard()))
-                .build();
-    }
-    public StoryDtoForEntity convertToBrandStoryDto(BrandStory brandStory) {
-        if (brandStory == null) return null;
-        return StoryDtoForEntity.builder()
-                .brandStoryId(brandStory.getBrandStoryId())
-                .resources(new ArrayList<>(brandStory.getResources()))
-                .slogan(brandStory.getSlogan())
-                .suggestions(new ArrayList<>(brandStory.getSuggestions()))
-                .niches(new ArrayList<>(brandStory.getNiches()))
-                .build();
-    }
-
-    public CardDtoForEntity convertToBrandCardDto(BrandCard brandCard) {
-        if (brandCard == null) return null;
-        return CardDtoForEntity.builder()
-                .brandCardId(brandCard.getBrandCardId())
-                .brandJob(brandCard.getBrandJob())
-                .jobDetail(brandCard.getJobDetail())
-                .build();
+//    public ChatRoomDto converToChatRoomDto(ChatRoom chatRoom){
+//        return ChatRoomDto.builder()
+//                .chatRoomId(chatRoom.getChatRoomId())
+////                .userId(chatRoom.getUser() != null ? chatRoom.getUser().getId() : null)
+//                .chatNickName(chatRoom.getChatNickName())
+//                .keywords(new ArrayList<>(chatRoom.getKeywords()))
+//                .answers(new ArrayList<>(chatRoom.getAnswers()))
+//                .finishChat(chatRoom.isFinishChat())
+//                .brandStory(convertToBrandStoryDto(chatRoom.getBrandStory()))
+//                .brandCard(convertToBrandCardDto(chatRoom.getBrandCard()))
+//                .build();
+//    }
+//    public StoryDtoForEntity convertToBrandStoryDto(BrandStory brandStory) {
+//        if (brandStory == null) return null;
+//        return StoryDtoForEntity.builder()
+//                .brandStoryId(brandStory.getBrandStoryId())
+//                .resources(brandStory.getResources())
+//                .storyText(brandStory.getStoryText())
+//                .storyTitle(brandStory.getStoryTitle())
+//                .target(brandStory.getTarget())
+//                .suggestions(brandStory.getSuggestions())
+//                .brandKeywords(brandStory.getBrandKeywords())
+//                .build();
+//    }
+//
+//    public CardDtoForEntity convertToBrandCardDto(BrandCard brandCard) {
+//        if (brandCard == null) return null;
+//        return CardDtoForEntity.builder()
+//                .brandCardId(brandCard.getBrandCardId())
+//                .brandJob(brandCard.getBrandJob())
+//                .jobDetail(brandCard.getJobDetail())
+//                .build();
+//    }
+    public ChatRoomDto recentChatRoom(Long userId){
+        Optional<User> user = userRepo.findById(userId);
+        if(user.isPresent()){
+            User u = user.get();
+            List<ChatRoom> chatRooms = u.getChatRooms();
+            ChatRoom ch = chatRooms.get(chatRooms.size()-1);
+            ChatRoomDto chatRoomDto = ChatRoomDto.builder()
+                    .chatRoomId(ch.getChatRoomId())
+                    .progress(ch.getProgress())
+                    .chatNickName(ch.getChatNickName())
+                    .keywords(ch.getKeywords())
+                    .answers(ch.getAnswers())
+                    .brandCard(ch.getBrandCard())
+                    .build();
+            return chatRoomDto;
+        } else {
+            throw new IllegalArgumentException("해당 유저가 없습니다");
+        }
     }
 
     public Long createChatRoom(Long userId){
@@ -186,7 +201,7 @@ public class ChatRoomService {
     }
 
 
-    public List<String> saveDraftAnswers(Long userId, Long chatRoomId, List<String> answers) {
+    public DraftDto saveDraftAnswers(Long userId, Long chatRoomId, DraftDto draftDto) {
         Optional<User> user = userRepo.findById(userId);
         if (user.isEmpty()) {
             throw new IllegalArgumentException("해당 유저가 없습니다");
@@ -206,13 +221,50 @@ public class ChatRoomService {
         }
 
         // 새로운 답변 추가
-        existingAnswers.addAll(answers);
+        existingAnswers.addAll(draftDto.getAnswers());
+        chatRoom.setProgress(draftDto.getProgress());
         chatRoom.setAnswers(existingAnswers);
 
         // 변경 사항 저장
         chatRoomRepo.save(chatRoom);
 
         // 업데이트된 답변 리스트 반환
-        return chatRoom.getAnswers();
+        return DraftDto.builder()
+                .progress(chatRoom.getProgress())
+                .answers(chatRoom.getAnswers())
+                .build();
+    }
+
+    public boolean finishChat(Long userId, Long chatRoomId) {
+        Optional<User> user = userRepo.findById(userId);
+        if(user.isEmpty()){
+            throw new IllegalArgumentException("해당 유저가 없습니다");
+        } else {
+            User u = user.get();
+            ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).orElseThrow(() ->
+                    new IllegalArgumentException("해당 채팅방이 없습니다"));
+            chatRoom.setFinishChat(true);
+            chatRoomRepo.save(chatRoom);
+            return chatRoom.isFinishChat();
+        }
+    }
+
+    public GroupKeywordRequest saveGroupKeywords(Long userId, Long chatRoomId, GroupKeywordRequest groupKeywords) {
+        Optional<User> userOpt = userRepo.findById(userId);
+        User user = userOpt.orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+
+        ChatRoom chatRoom = user.getChatRooms().stream()
+                .filter(cr -> cr.getChatRoomId().equals(chatRoomId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 없습니다"));
+
+        // GroupKeywordRequest의 데이터를 Map<String, EmbedGroupKeyword>로 변환
+        Map<String, EmbedGroupKeyword> g = new HashMap<>();
+        g.put(groupKeywords.getKey(), new EmbedGroupKeyword(groupKeywords.getKeywordValues()));
+
+        chatRoom.setGroupKeywords(g);
+        chatRoomRepo.save(chatRoom);
+
+        return groupKeywords;
     }
 }

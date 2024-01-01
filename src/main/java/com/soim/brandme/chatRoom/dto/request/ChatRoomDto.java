@@ -1,9 +1,7 @@
 package com.soim.brandme.chatRoom.dto.request;
 
-import com.soim.brandme.brandCard.dto.CardDtoForEntity;
-import com.soim.brandme.brandStory.dto.BrandStoryDto;
-import com.soim.brandme.brandStory.dto.StoryDtoForEntity;
-import jakarta.persistence.Embeddable;
+import com.soim.brandme.brandCard.entity.BrandCard;
+import com.soim.brandme.brandStory.entity.BrandStory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,9 +16,11 @@ import java.util.List;
 public class ChatRoomDto {
     Long chatRoomId;
     Long userId;
+    int progress;
+    boolean finishChat;
     private String chatNickName;
     private List<String> keywords;
     private List<String> answers;
-    private StoryDtoForEntity brandStory;
-    private CardDtoForEntity brandCard;
+    private BrandCard brandCard;
+    BrandStory brandStory;
 }

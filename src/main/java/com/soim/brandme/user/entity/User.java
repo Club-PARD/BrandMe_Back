@@ -29,6 +29,7 @@ public class User{
     private String password;
     private String username;
     private String locale;
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY,mappedBy = "user")
     private List<ChatRoom> chatRooms = new ArrayList<>();
     @Builder

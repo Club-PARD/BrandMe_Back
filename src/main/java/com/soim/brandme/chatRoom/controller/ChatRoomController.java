@@ -1,7 +1,8 @@
 package com.soim.brandme.chatRoom.controller;
 
+import com.soim.brandme.chatRoom.dto.request.DraftDto;
 import com.soim.brandme.chatRoom.dto.request.GroupKeywordRequest;
-import com.soim.brandme.chatRoom.entity.GroupKeyword;
+import com.soim.brandme.chatRoom.entity.EmbedGroupKeyword;
 import com.soim.brandme.chatRoom.service.ChatRoomService;
 import com.soim.brandme.chatRoom.dto.response.ResultResponse;
 import com.soim.brandme.user.service.UserService;
@@ -42,8 +43,8 @@ public class ChatRoomController {
         return chatRoomService.saveKeywords(userId,chatRoomId,keywords);
     }
     @PostMapping("/{userId}/{chatRoomId}/draftAnswers")
-    public ResponseEntity<List<String>> saveDraftAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> answers){
-        List<String> ret = chatRoomService.saveDraftAnswers(userId,chatRoomId,answers);
+    public ResponseEntity<DraftDto> saveDraftAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody DraftDto draft){
+        DraftDto ret = chatRoomService.saveDraftAnswers(userId,chatRoomId,draft);
         return ResponseEntity.ok(ret);
     }
 
@@ -63,6 +64,15 @@ public class ChatRoomController {
     @GetMapping("/{userId}/{chatRoomId}/keywords")
     public List<String> getKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId){
         return chatRoomService.getKeywords(userId,chatRoomId);
+    }
+    @GetMapping("/{userId}/{chatRoomId}/finishChat")
+    public boolean finishChat(@PathVariable Long userId, @PathVariable Long chatRoomId){
+        return chatRoomService.finishChat(userId,chatRoomId);
+    }
+    @PostMapping("/{userId}/{chatRoomId}/groupKeywords")
+    public ResponseEntity<GroupKeywordRequest> saveGroupKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody GroupKeywordRequest groupKeywords){
+        GroupKeywordRequest ret = chatRoomService.saveGroupKeywords(userId,chatRoomId,groupKeywords);
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 
 

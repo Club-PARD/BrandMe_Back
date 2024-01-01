@@ -1,16 +1,17 @@
-package com.soim.brandme.brandCard.dto;
+package com.soim.brandme.chatRoom.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CardDtoForEntity {
-    private Long brandCardId;
-    private String brandJob;
-    private String jobDetail;
+public class DraftDto {
+    int progress;
+    List<String> answers;
 }

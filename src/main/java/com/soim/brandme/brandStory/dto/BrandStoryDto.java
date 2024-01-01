@@ -8,8 +8,10 @@ import java.util.List;
 @Data
 @Builder
 public class BrandStoryDto {
-    private List<String> resources;
-    private String slogan;
-    private List<String> suggestions;
-    private List<String> niches;
+    List<String> brandKeywords;
+    List<String> storyTitles;
+    List<String> storyTexts;
+    String resources;
+    String target;
+    String suggestions;
 }
