@@ -23,6 +23,7 @@ import java.util.Map;
 @RestController
 @PropertySource("classpath:env.properties")
 @CrossOrigin(origins = "/**")
+@RequestMapping("/user")
 public class UserController {
     private final Oauth2UserService oauth2UserService;
     private final UserService userService;
@@ -36,27 +37,27 @@ public class UserController {
 ////        프런트에 돌려주는 것은 UserRequest객체와 http상태
 //        return new ResponseEntity(oauth2UserService.registerUser(user), HttpStatus.CREATED);
 //    }
-    @PatchMapping("/user/{userId}/updateProfile")
+    @PatchMapping("/{userId}/updateProfile")
     public ResponseEntity<UserRequest> updateProfile(@RequestBody UserRequest userRequest, @PathVariable Long userId){
         UserRequest user = userService.updateProfile(userRequest);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @GetMapping("/user/{userId}/myProfile")
+    @GetMapping("/{userId}/myProfile")
     public ResponseEntity<UserRequest> getMyProfile(@PathVariable Long userId){
         UserRequest user = userService.myProfile(userId);
         return ResponseEntity.ok(user);
     }
-    @GetMapping("/user/{userId}/allMyAnswers")
+    @GetMapping("/{userId}/allMyAnswers")
     public ResponseEntity<Map<Long, List<String>>> allUserAnswers(@PathVariable Long userId){
         Map<Long,List<String>> answers = userService.allMyAnswers(userId);
         return new ResponseEntity<>(answers,HttpStatus.OK);
     }
-    @PostMapping("/user/{userId}/saveNickname")
-    public ResponseEntity<NicknameResponse> saveNickname(@PathVariable Long userId, @RequestBody String nickname){
-        NicknameResponse ret = userService.saveNickname(userId,nickname);
-        return new ResponseEntity<>(ret,HttpStatus.OK);
+    @PostMapping("/{userId}/saveNickname")
+    public String saveNickname(@PathVariable Long userId, @RequestBody String nickname){
+        String ret = userService.saveNickname(userId,nickname);
+        return ret;
     }
-    @GetMapping("/user/{userId}/allResults")
+    @GetMapping("/{userId}/allResults")
     public ResponseEntity<AllResultResponse> allResults(@PathVariable Long userId){
         AllResultResponse ret = userService.allMyResult(userId);
         return new ResponseEntity<>(ret,HttpStatus.OK);

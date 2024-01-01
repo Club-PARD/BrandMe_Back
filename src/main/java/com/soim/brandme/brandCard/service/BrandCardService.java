@@ -23,12 +23,14 @@ public class BrandCardService {
 
 
     public BrandCardDto addBrandCard(Long userId, Long chatRoomId, BrandCardDto brandCardDto) {
-        Optional<User> user = userRepo.findById(userId);
+        Optional<User> u = userRepo.findById(userId);
+        User user = u.get();
         Optional<ChatRoom> chatRoom = chatRoomRepo.findById(chatRoomId);
 
-        if (user.isPresent() && chatRoom.isPresent()) {
+
+        if (u.isPresent() && chatRoom.isPresent()) {
             ChatRoom c = chatRoom.get();
-            c.setUser(user.get());
+            c.setUser(user);
 
             // BrandCard가 존재하는지 확인하고, 존재하지 않으면 새로 생성
              BrandCard b = brandCardRepo.findById(chatRoomId)
