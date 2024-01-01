@@ -19,8 +19,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("SOIM")
-                .description("api 명세서")
+                .title("Brand ON")
+                .description("Longcutthon Team SOIM API Documentation")
                 .version("0.0.0");
     }
 }

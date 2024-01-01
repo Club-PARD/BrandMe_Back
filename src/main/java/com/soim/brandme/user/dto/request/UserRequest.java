@@ -14,5 +14,4 @@ public class UserRequest {
     String picture;
     String username;
 //    String role;
-
 }

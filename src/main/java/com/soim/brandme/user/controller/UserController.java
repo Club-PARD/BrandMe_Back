@@ -6,6 +6,7 @@ import com.soim.brandme.user.dto.response.AllResultResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.service.UserService;
 import com.soim.brandme.user.dto.request.UserRequest;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -45,8 +47,8 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
     @GetMapping("/user/{userId}/allMyAnswers")
-    public ResponseEntity<Map<Long,String>> allUserAnswers(@PathVariable Long userId){
-        Map<Long,String> answers = userService.allMyAnswers(userId);
+    public ResponseEntity<Map<Long, List<String>>> allUserAnswers(@PathVariable Long userId){
+        Map<Long,List<String>> answers = userService.allMyAnswers(userId);
         return new ResponseEntity<>(answers,HttpStatus.OK);
     }
     @PostMapping("/user/{userId}/saveNickname")

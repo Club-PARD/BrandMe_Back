@@ -18,13 +18,10 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String name;
-
     @Column(nullable = false)
     private String email;
-
     private String role="ROLE_USER";
     private String provider;
     private String providerId;
@@ -36,8 +33,6 @@ public class User{
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY,mappedBy = "user")
     private List<ChatRoom> chatRooms = new ArrayList<>();
-
-
     @Builder
     public User(String name, String email, String role, String password, Boolean firstLogin,
         String username,String provider, String providerId,String image,String locale,List<ChatRoom> chatRooms) {
@@ -53,11 +48,4 @@ public class User{
         this.locale = locale;
         this.chatRooms = chatRooms;
     }
-
-    public User update(String name) {
-        this.name = name;
-        return this;
-    }
-
-
 }

@@ -12,6 +12,6 @@ public class AllResultResponse {
     Long userId;
     String name;
     String email;
-    List<ChatRoom> chatRooms;
+    List<ChatRoom> chatRooms; //entity성의 가지고 있음 -> 순환참조하기 때문에 한번 더 dto로 매핑
     String nickname;
 }

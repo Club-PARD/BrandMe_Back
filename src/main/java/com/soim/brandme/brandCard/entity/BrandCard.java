@@ -23,14 +23,15 @@ public class BrandCard {
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
     private String brandJob;
-    @ElementCollection
-    @CollectionTable(name = "jobDetails", joinColumns = @JoinColumn(name = "brand_card_id"))
-    @Column(name = "detail")
-    private List<String> jobDetails;
+    private String jobDetail;
+//    @ElementCollection
+//    @CollectionTable(name = "jobDetails", joinColumns = @JoinColumn(name = "brand_card_id"))
+//    @Column(name = "detail")
+//    private List<String> jobDetails;
 
     @Builder
-    public BrandCard(String brandJob, List<String> jobDetails) {
+    public BrandCard(String brandJob, String jobDetail) {
         this.brandJob = brandJob;
-        this.jobDetails = jobDetails;
+        this.jobDetail = jobDetail;
     }
 }

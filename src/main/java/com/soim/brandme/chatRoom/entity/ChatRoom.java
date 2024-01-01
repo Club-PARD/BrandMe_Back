@@ -41,17 +41,13 @@ public class ChatRoom {
     @OneToOne(mappedBy="chatRoom", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference
     private BrandCard brandCard;
-
 //    @ElementCollection
 //    @CollectionTable(name = "group_keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
 //    @MapKeyColumn(name = "keyword_key")
 //    @Column(name = "keyword_value")
 //    Map<Long, List<String>> groupKeywords;
-
 //    @Convert(converter = GroupKeywordsMapConverter.class)
 //    private String groupKeywords;
-
-
     @Builder
     public ChatRoom(Long id,User user, String chatNickName, List<String> keywords, List<String> answers, BrandCard brandCard, BrandStory brandStory) {
        this.chatRoomId = id;
