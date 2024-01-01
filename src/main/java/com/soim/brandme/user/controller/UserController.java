@@ -2,6 +2,8 @@ package com.soim.brandme.user.controller;
 
 import com.soim.brandme.auth.service.LoginService;
 import com.soim.brandme.auth.service.Oauth2UserService;
+import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
+import com.soim.brandme.chatRoom.service.ChatRoomService;
 import com.soim.brandme.user.dto.response.AllResultResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.service.UserService;
@@ -27,6 +29,7 @@ import java.util.Map;
 public class UserController {
     private final Oauth2UserService oauth2UserService;
     private final UserService userService;
+    private final ChatRoomService chatRoomService;
     private final LoginService loginService;
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
     private String googleClientId;
@@ -62,11 +65,13 @@ public class UserController {
         AllResultResponse ret = userService.allMyResult(userId);
         return new ResponseEntity<>(ret,HttpStatus.OK);
     }
-//    @GetMapping("/user/{userId}/allMyAnswers")
-//    public ResponseEntity<List<String>> allUserAnswers(@PathVariable Long userId){
-//        List<String> answers = userService.allMyAnswers(userId);
-//        return ResponseEntity.ok(answers);
-//    }
+    @GetMapping("/{userId}/recentChatRoom")
+    public ChatRoomDto recentChatRoom(@PathVariable Long userId){
+        ChatRoomDto ret = chatRoomService.recentChatRoom(userId);
+        return ret;
+    }
+
+
 //    프런트에서 axios.get으로 유저 구글로그인+ 유저 정보 요청하면 내가 redirect url로 이동시켜주고 거기서 유저 정보를 받아서 프런트에 보내줌
 //    @GetMapping("/googleLogin")
 //    public ResponseEntity<UserRequest> userGoogleLoginThenUserInfoReturn(HttpServletResponse response) throws IOException {

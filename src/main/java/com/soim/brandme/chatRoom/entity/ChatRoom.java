@@ -1,6 +1,7 @@
 package com.soim.brandme.chatRoom.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soim.brandme.brandCard.entity.BrandCard;
 import com.soim.brandme.brandStory.entity.BrandStory;
@@ -22,10 +23,12 @@ public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatRoomId;
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
     private String chatNickName;
+    private boolean finishChat;
     @ElementCollection
     @CollectionTable(name = "keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
     @Column(name = "keyword")
@@ -38,17 +41,25 @@ public class ChatRoom {
     @OneToOne(mappedBy="chatRoom", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference
     private BrandCard brandCard;
+    @ElementCollection
+    @CollectionTable(name = "group_keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
+    @MapKeyColumn(name = "group_keyword_id")
+    private Map<String,EmbedGroupKeyword> groupKeywords;
+    int progress;
     
     @Builder
-    public ChatRoom(Long id, User user, String chatNickName, List<String> keywords, List<String> answers, BrandCard brandCard, BrandStory brandStory, List<GroupKeyword> groupKeywords) {
+    public ChatRoom(Long id, User user, String chatNickName, List<String> keywords, List<String> answers, int progress,
+                 BrandStory brandStory,boolean finishChat,BrandCard brandCard, Map<String,EmbedGroupKeyword> groupKeywords) {
        this.chatRoomId = id;
         this.user = user;
         this.chatNickName = chatNickName;
         this.keywords = keywords;
+        this.finishChat = finishChat;
         this.answers = answers;
-//        this.groupKeywords = groupKeywords;
         this.brandCard = brandCard;
         this.brandStory = brandStory;
+        this.groupKeywords = groupKeywords;
+        this.progress = progress;
     }
 
 }
