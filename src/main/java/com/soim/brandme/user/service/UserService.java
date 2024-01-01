@@ -136,6 +136,7 @@ public class UserService {
                                     .keywords(chatRoom.getKeywords())
                                     .answers(chatRoom.getAnswers())
                                     .brandStory(chatRoom.getBrandStory())
+                                    .brandCard(chatRoom.getBrandCard())
                                     .build())
                             .collect(Collectors.toList())).build();
 
