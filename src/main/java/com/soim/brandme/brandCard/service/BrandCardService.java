@@ -8,11 +8,13 @@ import com.soim.brandme.chatRoom.repo.ChatRoomRepo;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BrandCardService {
@@ -35,7 +37,6 @@ public class BrandCardService {
                         .identity_explaination(brandCardDto.getIdentity_explaination())
                         .chatRoom(c) // BrandCard와 ChatRoom 연결
                         .build();
-
                 brandCardRepo.save(brandCard); // BrandCard 저장
                 c.setBrandCard(brandCard); // ChatRoom에 BrandCard 설정
                 chatRoomRepo.save(c); // ChatRoom 업데이트

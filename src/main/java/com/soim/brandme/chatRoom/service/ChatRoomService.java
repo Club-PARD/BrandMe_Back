@@ -149,6 +149,7 @@ public class ChatRoomService {
                     .keywords(chatRoom.getKeywords())
                     .answers(chatRoom.getAnswers())
                     .brandStory(chatRoom.getBrandStory())
+                    .brandCard(chatRoom.getBrandCard())
                     .build();
 
     }

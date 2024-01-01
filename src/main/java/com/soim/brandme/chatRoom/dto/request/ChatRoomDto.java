@@ -21,6 +21,6 @@ public class ChatRoomDto {
     private String chatNickName;
     private List<String> keywords;
     private List<String> answers;
-    private BrandCard brandCard;
+     BrandCard brandCard;
     BrandStory brandStory;
 }
