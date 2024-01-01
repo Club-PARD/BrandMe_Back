@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,6 +41,11 @@ public class ChatRoomController {
     public String saveKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> keywords){
         return chatRoomService.saveKeywords(userId,chatRoomId,keywords);
     }
+    @PostMapping("/{userId}/{chatRoomId}/draftAnswers")
+    public ResponseEntity<List<String>> saveDraftAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> answers){
+        List<String> ret = chatRoomService.saveDraftAnswers(userId,chatRoomId,answers);
+        return ResponseEntity.ok(ret);
+    }
 
     @PostMapping("/{userId}/{chatRoomId}/answers")
     public ResponseEntity<List<String>> saveAnswers(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<String> answers){
@@ -58,6 +64,8 @@ public class ChatRoomController {
     public List<String> getKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId){
         return chatRoomService.getKeywords(userId,chatRoomId);
     }
+
+
 //    @PostMapping("/{userId}/{chatRoomId}/groupKeywords")
 //    public ResponseEntity<List<GroupKeywordRequest>> saveGroupKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<GroupKeywordRequest> groupKeywords){
 //        List<GroupKeywordRequest> ret = chatRoomService.saveGroupKeywords(userId,chatRoomId,groupKeywords);

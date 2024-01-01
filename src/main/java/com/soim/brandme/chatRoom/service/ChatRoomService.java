@@ -185,4 +185,34 @@ public class ChatRoomService {
         return chatRoom.getAnswers();
     }
 
+
+    public List<String> saveDraftAnswers(Long userId, Long chatRoomId, List<String> answers) {
+        Optional<User> user = userRepo.findById(userId);
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("해당 유저가 없습니다");
+        }
+
+        // 채팅방 찾기
+        Optional<ChatRoom> chatRoomOpt = chatRoomRepo.findById(chatRoomId);
+        if (chatRoomOpt.isEmpty()) {
+            throw new IllegalArgumentException("해당 채팅방이 없습니다");
+        }
+
+        // 기존 답변에 새로운 답변 추가
+        ChatRoom chatRoom = chatRoomOpt.get();
+        List<String> existingAnswers = new ArrayList<>();
+        if (chatRoom.getAnswers() != null) {
+            existingAnswers.addAll(chatRoom.getAnswers());
+        }
+
+        // 새로운 답변 추가
+        existingAnswers.addAll(answers);
+        chatRoom.setAnswers(existingAnswers);
+
+        // 변경 사항 저장
+        chatRoomRepo.save(chatRoom);
+
+        // 업데이트된 답변 리스트 반환
+        return chatRoom.getAnswers();
+    }
 }

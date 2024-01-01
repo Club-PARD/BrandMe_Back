@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 @Builder
 public class GroupKeywordRequest {
-    private Long id;
+    private String key;
     private List<String> keywordValues;
 }
