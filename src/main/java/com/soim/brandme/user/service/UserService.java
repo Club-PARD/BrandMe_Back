@@ -1,6 +1,11 @@
 package com.soim.brandme.user.service;
 
 import com.soim.brandme.auth.dto.resonse.LoginResponse;
+import com.soim.brandme.brandCard.dto.CardDtoForEntity;
+import com.soim.brandme.brandCard.entity.BrandCard;
+import com.soim.brandme.brandStory.dto.StoryDtoForEntity;
+import com.soim.brandme.brandStory.entity.BrandStory;
+import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
 import com.soim.brandme.user.dto.response.AllResultResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
@@ -13,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -84,29 +90,14 @@ public class UserService {
             }
         }
     }
-    public NicknameResponse saveNickname(Long userId, String nickname){
+    public String saveNickname(Long userId, String nickname){
         Optional<User> user = userRepo.findById(userId);
-        if(user.isPresent()){
             User u = user.get();
             if(nickname!=null){
                 u.setUsername(nickname);
+                u.setFirstLogin(false);
                 userRepo.save(u);
-                return NicknameResponse.builder()
-                        .name(u.getName())
-                        .email(u.getEmail())
-                        .image(u.getImage())
-                        .username(u.getUsername())
-                        .firstLogin(false)
-                        .build();
-            } else {
-                return NicknameResponse.builder()
-                        .name(u.getName())
-                        .email(u.getEmail())
-                        .image(u.getImage())
-                        .username(u.getUsername())
-                        .firstLogin(true)
-                        .build();
-            }
+                return u.getUsername();
         } else {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
         }
@@ -142,16 +133,48 @@ public class UserService {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
             User u = user.get();
-            log.info("nickname : " + u.getUsername());
+            List<ChatRoomDto> chatRoomDtos = u.getChatRooms().stream()
+                    .map(this::converToChatRoomDto)
+                    .toList();
             return AllResultResponse.builder()
                     .userId(u.getId())
                     .name(u.getName())
                     .email(u.getEmail())
                     .nickname(u.getUsername())
-                    .chatRooms(u.getChatRooms())
+                    .chatRooms(chatRoomDtos)
                     .build();
         } else {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
         }
+    }
+    public ChatRoomDto converToChatRoomDto(ChatRoom chatRoom){
+        return ChatRoomDto.builder()
+                .chatRoomId(chatRoom.getChatRoomId())
+                .userId(chatRoom.getUser() != null ? chatRoom.getUser().getId() : null)
+                .chatNickName(chatRoom.getChatNickName())
+                .keywords(new ArrayList<>(chatRoom.getKeywords()))
+                .answers(new ArrayList<>(chatRoom.getAnswers()))
+                .brandStory(convertToBrandStoryDto(chatRoom.getBrandStory()))
+                .brandCard(convertToBrandCardDto(chatRoom.getBrandCard()))
+                .build();
+    }
+    public StoryDtoForEntity convertToBrandStoryDto(BrandStory brandStory) {
+        if (brandStory == null) return null;
+        return StoryDtoForEntity.builder()
+                .brandStoryId(brandStory.getBrandStoryId())
+                .resources(new ArrayList<>(brandStory.getResources()))
+                .slogan(brandStory.getSlogan())
+                .suggestions(new ArrayList<>(brandStory.getSuggestions()))
+                .niches(new ArrayList<>(brandStory.getNiches()))
+                .build();
+    }
+
+    public CardDtoForEntity convertToBrandCardDto(BrandCard brandCard) {
+        if (brandCard == null) return null;
+        return CardDtoForEntity.builder()
+                .brandCardId(brandCard.getBrandCardId())
+                .brandJob(brandCard.getBrandJob())
+                .jobDetail(brandCard.getJobDetail())
+                .build();
     }
 }

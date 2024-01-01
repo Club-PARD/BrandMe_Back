@@ -1,7 +1,9 @@
 package com.soim.brandme.chatRoom.controller;
 
+import com.soim.brandme.chatRoom.dto.request.GroupKeywordRequest;
+import com.soim.brandme.chatRoom.entity.GroupKeyword;
 import com.soim.brandme.chatRoom.service.ChatRoomService;
-import com.soim.brandme.chatRoom.dto.request.ResultResponse;
+import com.soim.brandme.chatRoom.dto.response.ResultResponse;
 import com.soim.brandme.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.PropertySource;
@@ -56,4 +58,9 @@ public class ChatRoomController {
     public List<String> getKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId){
         return chatRoomService.getKeywords(userId,chatRoomId);
     }
+//    @PostMapping("/{userId}/{chatRoomId}/groupKeywords")
+//    public ResponseEntity<List<GroupKeywordRequest>> saveGroupKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody List<GroupKeywordRequest> groupKeywords){
+//        List<GroupKeywordRequest> ret = chatRoomService.saveGroupKeywords(userId,chatRoomId,groupKeywords);
+//        return new ResponseEntity<>(ret, HttpStatus.OK);
+//    }
 }

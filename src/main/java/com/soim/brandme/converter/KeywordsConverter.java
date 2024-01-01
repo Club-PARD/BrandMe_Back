@@ -1,4 +1,4 @@
-package com.soim.brandme.chatRoom.application;
+package com.soim.brandme.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

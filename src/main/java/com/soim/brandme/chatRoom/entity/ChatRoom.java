@@ -1,19 +1,17 @@
 package com.soim.brandme.chatRoom.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soim.brandme.brandCard.entity.BrandCard;
 import com.soim.brandme.brandStory.entity.BrandStory;
-import com.soim.brandme.chatRoom.application.GroupKeywordsMapConverter;
-import com.soim.brandme.chatRoom.application.KeywordsConverter;
+import com.soim.brandme.converter.KeywordsConverter;
 import com.soim.brandme.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,6 @@ public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatRoomId;
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,15 +38,16 @@ public class ChatRoom {
     @OneToOne(mappedBy="chatRoom", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference
     private BrandCard brandCard;
+//    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<GroupKeyword> groupKeywords;
 //    @ElementCollection
+//    @MapKeyColumn(name = "key")
+//    @Column(name="keywords")
 //    @CollectionTable(name = "group_keywords", joinColumns = @JoinColumn(name = "chat_room_id"))
-//    @MapKeyColumn(name = "keyword_key")
-//    @Column(name = "keyword_value")
-//    Map<Long, List<String>> groupKeywords;
-//    @Convert(converter = GroupKeywordsMapConverter.class)
-//    private String groupKeywords;
+//    Map<String,List<String>> groupKeywords;
+
     @Builder
-    public ChatRoom(Long id,User user, String chatNickName, List<String> keywords, List<String> answers, BrandCard brandCard, BrandStory brandStory) {
+    public ChatRoom(Long id, User user, String chatNickName, List<String> keywords, List<String> answers, BrandCard brandCard, BrandStory brandStory, List<GroupKeyword> groupKeywords) {
        this.chatRoomId = id;
         this.user = user;
         this.chatNickName = chatNickName;

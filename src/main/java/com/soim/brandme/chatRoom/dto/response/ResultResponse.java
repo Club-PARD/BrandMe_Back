@@ -1,4 +1,4 @@
-package com.soim.brandme.chatRoom.dto.request;
+package com.soim.brandme.chatRoom.dto.response;
 
 import com.soim.brandme.brandCard.entity.BrandCard;
 import com.soim.brandme.brandStory.entity.BrandStory;

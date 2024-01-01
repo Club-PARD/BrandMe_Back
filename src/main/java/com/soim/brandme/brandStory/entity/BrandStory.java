@@ -14,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 public class BrandStory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long brandStoryId;
     @JsonBackReference
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
     @ElementCollection
