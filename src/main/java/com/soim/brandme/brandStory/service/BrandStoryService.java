@@ -37,6 +37,7 @@ public class BrandStoryService {
                         .chatRoom(ch)
                         .build();
                 brandStoryRepo.save(brandStory);
+                ch.setBrandStory(brandStory);
                 return BrandStoryDto.builder()
                         .brandKeywords(brandStory.getBrandKeywords())
                         .brandKeywords(brandStory.getBrandKeywords())

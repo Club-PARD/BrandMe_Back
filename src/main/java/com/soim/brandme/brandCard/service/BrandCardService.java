@@ -7,52 +7,48 @@ import com.soim.brandme.chatRoom.entity.ChatRoom;
 import com.soim.brandme.chatRoom.repo.ChatRoomRepo;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.repo.UserRepo;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Data
 public class BrandCardService {
     private final BrandCardRepo brandCardRepo;
     private final UserRepo userRepo;
     private final ChatRoomRepo chatRoomRepo;
 
+    public BrandCardDto saveBrandCard(Long userId, Long chatRoomId, BrandCardDto brandCardDto) {
+        Optional<User> user = userRepo.findById(userId);
+        if (user.isPresent()) {
+            User u = user.get();
+            Optional<ChatRoom> chatRoomOptional = u.getChatRooms().stream()
+                    .filter(c -> c.getChatRoomId().equals(chatRoomId))
+                    .findFirst();
+            if (chatRoomOptional.isPresent()) {
+                ChatRoom c = chatRoomOptional.get();
 
-    public BrandCardDto addBrandCard(Long userId, Long chatRoomId, BrandCardDto brandCardDto) {
-        Optional<User> u = userRepo.findById(userId);
-        User user = u.get();
-        Optional<ChatRoom> chatRoom = chatRoomRepo.findById(chatRoomId);
+                BrandCard brandCard = BrandCard.builder()
+                        .identity(brandCardDto.getIdentity())
+                        .identity_explaination(brandCardDto.getIdentity_explaination())
+                        .chatRoom(c) // BrandCard와 ChatRoom 연결
+                        .build();
 
+                brandCardRepo.save(brandCard); // BrandCard 저장
+                c.setBrandCard(brandCard); // ChatRoom에 BrandCard 설정
+                chatRoomRepo.save(c); // ChatRoom 업데이트
 
-        if (u.isPresent() && chatRoom.isPresent()) {
-            ChatRoom c = chatRoom.get();
-            c.setUser(user);
-
-            // BrandCard가 존재하는지 확인하고, 존재하지 않으면 새로 생성
-             BrandCard b = brandCardRepo.findById(chatRoomId)
-                    .orElse(BrandCard.builder()
-                            .brandJob(brandCardDto.getBrandJob())
-                            .jobDetail(brandCardDto.getJobDetail())
-                            .build());
-
-            // 기존 또는 새로운 BrandCard 객체 업데이트
-            b.setBrandJob(brandCardDto.getBrandJob());
-            b.setJobDetail(brandCardDto.getJobDetail());
-            b.setChatRoom(c);
-
-            // BrandCard 저장
-            brandCardRepo.save(b);
-
-            return BrandCardDto.builder()
-                    .brandJob(b.getBrandJob())
-                    .jobDetail(b.getJobDetail())
-                    .build();
+                return BrandCardDto.builder()
+                        .identity(brandCard.getIdentity())
+                        .identity_explaination(brandCard.getIdentity_explaination())
+                        .build();
+            } else {
+                throw new IllegalArgumentException("해당하는 채팅방이 없습니다.");
+            }
         } else {
-            throw new IllegalArgumentException("해당 user id 또는 chatRoom id로 등록된 계정이 없습니다");
+            throw new IllegalArgumentException("해당하는 사용자가 없습니다.");
         }
     }
 

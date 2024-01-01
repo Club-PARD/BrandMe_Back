@@ -69,7 +69,6 @@ public class ChatRoomService {
                     .chatNickName(ch.getChatNickName())
                     .keywords(ch.getKeywords())
                     .answers(ch.getAnswers())
-                    .brandCard(ch.getBrandCard())
                     .build();
             return chatRoomDto;
         } else {
@@ -149,7 +148,6 @@ public class ChatRoomService {
                     .chatNickName(chatRoom.getChatNickName())
                     .keywords(chatRoom.getKeywords())
                     .answers(chatRoom.getAnswers())
-                    .brandCard(chatRoom.getBrandCard())
                     .brandStory(chatRoom.getBrandStory())
                     .build();
 

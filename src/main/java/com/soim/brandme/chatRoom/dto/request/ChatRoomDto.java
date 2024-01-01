@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ChatRoomDto {
     Long chatRoomId;
-    Long userId;
+//    Long userId;
     int progress;
     boolean finishChat;
     private String chatNickName;
