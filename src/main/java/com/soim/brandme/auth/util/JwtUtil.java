@@ -50,7 +50,6 @@ public class JwtUtil {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            log.info("JWT Claims: {}", claims);
         } catch (Exception e) {
             log.error("JWT Parsing Error", e);
         }

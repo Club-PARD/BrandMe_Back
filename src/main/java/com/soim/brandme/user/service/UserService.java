@@ -57,9 +57,7 @@ public class UserService {
             User user = u.get();
             if((user.getUsername())!=null){ //nickname까지 있다?
                 user.setFirstLogin(false); //첫 로그인이 아니다
-                log.info("존재하는 user : " + user);
             } //nickname이 없다면
-            log.info("존재하는 user : " + user);
             return LoginResponse.builder()
                     .userId(user.getId())
                     .firstLogin(user.isFirstLogin())
@@ -71,7 +69,6 @@ public class UserService {
                         .email(userRequest.getEmail())
                         .image(userRequest.getPicture())
                         .build();
-                log.info("신규 유저 정보 nickname 없음 : " + user);
                 userRepo.save(user);
                 return LoginResponse.builder()
                         .userId(user.getId())
@@ -127,6 +124,7 @@ public class UserService {
             User u = user.get();
             return AllResultResponse.builder()
                     .userId(u.getId())
+                    .name(u.getName())
                     .nickname(u.getUsername())
                     .email(u.getEmail())
                     .chatRooms(u.getChatRooms().stream()
@@ -134,6 +132,7 @@ public class UserService {
                                     .chatRoomId(chatRoom.getChatRoomId())
                                     .chatNickName(chatRoom.getChatNickName())
                                     .keywords(chatRoom.getKeywords())
+                                    .groupKeywords(chatRoom.getGroupKeywords())
                                     .answers(chatRoom.getAnswers())
                                     .brandStory(chatRoom.getBrandStory())
                                     .brandCard(chatRoom.getBrandCard())

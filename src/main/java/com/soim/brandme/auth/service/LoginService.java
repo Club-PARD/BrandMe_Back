@@ -28,17 +28,14 @@ public class LoginService {
         String registrationId = "google";
         try {
             String accessToken = getAccessToken(code, registrationId);
-            log.info(" accessToken: {}", accessToken);
 
             getUserResource(accessToken, registrationId).subscribe(userResourceNode -> {
-                log.info("User resource node: {}", userResourceNode);
 
                 try {
                     String id = userResourceNode.get("id").asText();
                     String email = userResourceNode.get("email").asText();
                     String nickname = userResourceNode.get("name").asText();
 
-                    log.info("User info - ID: {}, Email: {}, Nickname: {}", id, email, nickname);
                 } catch (Exception e) {
                     log.error("Error processing user resource node", e);
                 }
