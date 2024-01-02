@@ -3,6 +3,7 @@ package com.soim.brandme.user.service;
 import com.soim.brandme.auth.dto.resonse.LoginResponse;
 import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
+import com.soim.brandme.user.dto.request.NickDto;
 import com.soim.brandme.user.dto.response.AllResultResponse;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.dto.request.UserRequest;
@@ -61,6 +62,7 @@ public class UserService {
             return LoginResponse.builder()
                     .userId(user.getId())
                     .firstLogin(user.isFirstLogin())
+                    .nickname(user.getUsername())
                     .build();
         } else { //login을 처음 한다면
             if((userRequest.getEmail()!=null) && (userRequest.getEmail().contains("@"))) {
@@ -73,20 +75,24 @@ public class UserService {
                 return LoginResponse.builder()
                         .userId(user.getId())
                         .firstLogin(true)
+                        .nickname(user.getUsername())
                         .build();
             } else {
                 throw new UsernameNotFoundException("잘못된 Google email 형식입니다");
             }
         }
     }
-    public String saveNickname(Long userId, String nickname){
+    public NickDto saveNickname(Long userId, NickDto nickname){
         Optional<User> user = userRepo.findById(userId);
             User u = user.get();
             if(nickname!=null){
-                u.setUsername(nickname);
+                u.setUsername(nickname.getNickname());
                 u.setFirstLogin(false);
                 userRepo.save(u);
-                return u.getUsername();
+                NickDto n = NickDto.builder()
+                        .nickname(nickname.getNickname())
+                        .build();
+                return n;
         } else {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
         }
@@ -132,10 +138,12 @@ public class UserService {
                                     .chatRoomId(chatRoom.getChatRoomId())
                                     .chatNickName(chatRoom.getChatNickName())
                                     .keywords(chatRoom.getKeywords())
+                                    .finishChat(chatRoom.isFinishChat())
                                     .groupKeywords(chatRoom.getGroupKeywords())
+                                    .progress(chatRoom.getProgress())
                                     .answers(chatRoom.getAnswers())
-                                    .brandStory(chatRoom.getBrandStory())
                                     .brandCard(chatRoom.getBrandCard())
+                                    .brandStory(chatRoom.getBrandStory())
                                     .build())
                             .collect(Collectors.toList())).build();
 

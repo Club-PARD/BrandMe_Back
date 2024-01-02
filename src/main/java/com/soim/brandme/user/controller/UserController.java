@@ -4,6 +4,7 @@ import com.soim.brandme.auth.service.LoginService;
 import com.soim.brandme.auth.service.Oauth2UserService;
 import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.service.ChatRoomService;
+import com.soim.brandme.user.dto.request.NickDto;
 import com.soim.brandme.user.dto.response.AllResultResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.service.UserService;
@@ -56,8 +57,8 @@ public class UserController {
         return new ResponseEntity<>(answers,HttpStatus.OK);
     }
     @PostMapping("/{userId}/saveNickname")
-    public String saveNickname(@PathVariable Long userId, @RequestBody String nickname){
-        String ret = userService.saveNickname(userId,nickname);
+    public NickDto saveNickname(@PathVariable Long userId, @RequestBody NickDto nickname){
+        NickDto ret = userService.saveNickname(userId,nickname);
         return ret;
     }
     @GetMapping("/{userId}/allResults")

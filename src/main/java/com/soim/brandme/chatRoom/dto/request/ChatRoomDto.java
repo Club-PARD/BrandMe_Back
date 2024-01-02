@@ -25,5 +25,5 @@ public class ChatRoomDto {
     private List<String> answers;
     Map<String, EmbedGroupKeyword> groupKeywords;
      BrandCard brandCard;
-    BrandStory brandStory;
+     BrandStory brandStory;
 }

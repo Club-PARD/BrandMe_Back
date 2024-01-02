@@ -148,7 +148,6 @@ public class ChatRoomService {
                     .chatNickName(chatRoom.getChatNickName())
                     .keywords(chatRoom.getKeywords())
                     .answers(chatRoom.getAnswers())
-                    .brandStory(chatRoom.getBrandStory())
                     .brandCard(chatRoom.getBrandCard())
                     .build();
 
@@ -226,22 +225,24 @@ public class ChatRoomService {
         }
     }
 
-    public GroupKeywordRequest saveGroupKeywords(Long userId, Long chatRoomId, GroupKeywordRequest groupKeywords) {
-        Optional<User> userOpt = userRepo.findById(userId);
-        User user = userOpt.orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
+    public GroupKeywordRequest saveGroupKeywords(Long userId, Long chatRoomId, Map<String,List<String>> groupKeywords) {
 
-        ChatRoom chatRoom = user.getChatRooms().stream()
-                .filter(cr -> cr.getChatRoomId().equals(chatRoomId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 없습니다"));
 
-        // GroupKeywordRequest의 데이터를 Map<String, EmbedGroupKeyword>로 변환
-        Map<String, EmbedGroupKeyword> g = new HashMap<>();
-        g.put(groupKeywords.getKey(), new EmbedGroupKeyword(groupKeywords.getKeywordValues()));
+        ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).orElseThrow(() ->
+                new IllegalArgumentException("해당 채팅방이 없습니다"));
 
-        chatRoom.setGroupKeywords(g);
+        // Map<String, List<String>>를 Map<String, EmbedGroupKeyword>로 변환
+        Map<String, EmbedGroupKeyword> convertedGroupKeywords = new HashMap<>();
+        groupKeywords.forEach((key, valueList) -> {
+            EmbedGroupKeyword embedGroupKeyword = new EmbedGroupKeyword(valueList);
+            convertedGroupKeywords.put(key, embedGroupKeyword);
+        });
+
+        chatRoom.setGroupKeywords(convertedGroupKeywords);
         chatRoomRepo.save(chatRoom);
 
-        return groupKeywords;
+        return GroupKeywordRequest.builder()
+                .groupKeywords(groupKeywords)
+                .build();
     }
 }

@@ -1,7 +1,6 @@
 package com.soim.brandme.chatRoom.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soim.brandme.brandCard.entity.BrandCard;
 import com.soim.brandme.brandStory.entity.BrandStory;
@@ -12,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,15 +47,15 @@ public class ChatRoom {
     
     @Builder
     public ChatRoom(Long id, User user, String chatNickName, List<String> keywords, List<String> answers, int progress,
-           BrandCard brandCard,BrandStory brandStory,boolean finishChat, Map<String,EmbedGroupKeyword> groupKeywords) {
+            BrandStory brandStory,BrandCard brandCard,boolean finishChat, Map<String,EmbedGroupKeyword> groupKeywords) {
        this.chatRoomId = id;
         this.user = user;
         this.chatNickName = chatNickName;
         this.keywords = keywords;
         this.finishChat = finishChat;
         this.answers = answers;
-        this.brandStory = brandStory;
         this.brandCard = brandCard;
+        this.brandStory = brandStory;
         this.groupKeywords = groupKeywords;
         this.progress = progress;
     }

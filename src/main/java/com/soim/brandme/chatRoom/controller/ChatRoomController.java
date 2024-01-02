@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +71,7 @@ public class ChatRoomController {
         return chatRoomService.finishChat(userId,chatRoomId);
     }
     @PostMapping("/{userId}/{chatRoomId}/groupKeywords")
-    public ResponseEntity<GroupKeywordRequest> saveGroupKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody GroupKeywordRequest groupKeywords){
+    public ResponseEntity<GroupKeywordRequest> saveGroupKeywords(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody Map<String,List<String>> groupKeywords){
         GroupKeywordRequest ret = chatRoomService.saveGroupKeywords(userId,chatRoomId,groupKeywords);
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }

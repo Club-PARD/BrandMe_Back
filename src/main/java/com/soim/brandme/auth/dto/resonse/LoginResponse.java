@@ -8,4 +8,5 @@ import lombok.Data;
 public class LoginResponse {
     private Long userId;
     private Boolean firstLogin;
+    String nickname;
 }

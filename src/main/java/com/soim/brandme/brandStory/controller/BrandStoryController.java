@@ -1,6 +1,6 @@
 package com.soim.brandme.brandStory.controller;
 
-import com.soim.brandme.brandStory.dto.BrandStoryDto;
+import com.soim.brandme.brandStory.dto.BrandStoryResponse;
 import com.soim.brandme.brandStory.service.BrandStoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class BrandStoryController {
     private final BrandStoryService brandStoryService;
     @PostMapping("/{userId}/{chatRoomId}/brandStory")
-    public ResponseEntity<BrandStoryDto> saveBrandStory(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody BrandStoryDto brandStoryDto){
-        BrandStoryDto ret = brandStoryService.saveBrandStory(userId,chatRoomId,brandStoryDto);
+    public ResponseEntity<BrandStoryResponse> createBrandStory(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody BrandStoryResponse brandStoryResponse) {
+        BrandStoryResponse ret = brandStoryService.createBrandStory(userId, chatRoomId, brandStoryResponse);
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 }

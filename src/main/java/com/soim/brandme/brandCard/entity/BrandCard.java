@@ -15,7 +15,7 @@ public class BrandCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long brandCardId;
     private String identity;
-    private String identity_explaination;
+    private String identity_explanation;
     @OneToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "chat_room_id")

@@ -1,4 +1,4 @@
-package com.soim.brandme.brandCard.dto;
+package com.soim.brandme.user.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BrandCardDto {
-    String identity;
-    String identity_explanation;
+public class NickDto {
+    private String nickname;
 }
