@@ -153,29 +153,7 @@ public class ChatRoomService {
                     .build();
 
     }
-//    public List<GroupKeywordRequest> saveGroupKeywords(Long userId, Long chatRoomId, List<GroupKeywordRequest> groupKeywords) {
-//        Optional<User> user = userRepo.findById(userId);
-//        if (user.isPresent()) {
-//            User u = user.get();
-//            ChatRoom chatRoom = u.getChatRooms().stream().filter(cr -> cr.getChatRoomId().equals(chatRoomId)).findFirst()
-//                    .orElseThrow(() -> new IllegalArgumentException("해당 채팅방이 없습니다"));
-//
-//            List<GroupKeyword> g = groupKeywords.stream().map(gk -> GroupKeyword.builder()
-//                    .id(gk.getId())
-//                    .keywordValues(gk.getKeywordValues())
-//                    .chatRoom(chatRoom)
-//                    .build()).toList();
-//            chatRoom.setGroupKeywords(g);
-//            log.info("group Keywords"+ g.toString() + "chatRoom ==== {}", chatRoom.getChatRoomId());
-//            chatRoomRepo.save(chatRoom);
-//            return chatRoom.getGroupKeywords().stream().map((groupKeyword -> GroupKeywordRequest.builder()
-//                    .id(groupKeyword.getId())
-//                    .keywordValues(groupKeyword.getKeywordValues())
-//                    .build())).toList();
-//        } else {
-//            throw new IllegalArgumentException("해당 유저가 없습니다");
-//        }
-//    }
+
     public List<String> saveAnswers(Long userId, Long chatRoomId, List<String> answers) {
         Optional<User> user = userRepo.findById(userId);
         if (user.isEmpty()) {
