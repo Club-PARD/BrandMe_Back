@@ -1,13 +1,15 @@
 package com.soim.brandme.chatRoom.dto.request;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
+import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GroupKeywordRequest {
-    private String key;
-    private List<String> keywordValues;
+    private Map<String,List<String>> groupKeywords;
 }

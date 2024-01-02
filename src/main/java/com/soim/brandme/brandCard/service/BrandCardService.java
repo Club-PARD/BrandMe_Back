@@ -29,21 +29,32 @@ public class BrandCardService {
             Optional<ChatRoom> chatRoomOptional = u.getChatRooms().stream()
                     .filter(c -> c.getChatRoomId().equals(chatRoomId))
                     .findFirst();
-            if (chatRoomOptional.isPresent()) {
-                ChatRoom c = chatRoomOptional.get();
 
-                BrandCard brandCard = BrandCard.builder()
-                        .identity(brandCardDto.getIdentity())
-                        .identity_explaination(brandCardDto.getIdentity_explaination())
-                        .chatRoom(c) // BrandCard와 ChatRoom 연결
-                        .build();
-                brandCardRepo.save(brandCard); // BrandCard 저장
-                c.setBrandCard(brandCard); // ChatRoom에 BrandCard 설정
-                chatRoomRepo.save(c); // ChatRoom 업데이트
+            if (chatRoomOptional.isPresent()) {
+                ChatRoom chatRoom = chatRoomOptional.get();
+                BrandCard brandCard = chatRoom.getBrandCard(); // 기존 BrandCard 가져오기
+
+                if (brandCard == null) {
+                    // 기존 BrandCard가 없으면 새로 생성
+                    brandCard = BrandCard.builder()
+                            .identity(brandCardDto.getIdentity())
+                            .identity_explanation(brandCardDto.getIdentity_explanation())
+                            .chatRoom(chatRoom)
+                            .build();
+                } else {
+                    // 기존 BrandCard가 있으면 업데이트
+                    brandCard.setIdentity(brandCardDto.getIdentity());
+                    brandCard.setIdentity_explanation(brandCardDto.getIdentity_explanation());
+                    // 필요한 경우, 다른 필드도 업데이트
+                }
+
+                brandCardRepo.save(brandCard); // BrandCard 저장 또는 업데이트
+                chatRoom.setBrandCard(brandCard); // ChatRoom에 BrandCard 설정
+                chatRoomRepo.save(chatRoom); // ChatRoom 업데이트
 
                 return BrandCardDto.builder()
                         .identity(brandCard.getIdentity())
-                        .identity_explaination(brandCard.getIdentity_explaination())
+                        .identity_explanation(brandCard.getIdentity_explanation())
                         .build();
             } else {
                 throw new IllegalArgumentException("해당하는 채팅방이 없습니다.");
@@ -52,5 +63,6 @@ public class BrandCardService {
             throw new IllegalArgumentException("해당하는 사용자가 없습니다.");
         }
     }
+
 
 }

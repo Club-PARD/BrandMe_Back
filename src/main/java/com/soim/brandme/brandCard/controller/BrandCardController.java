@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,7 +16,7 @@ public class BrandCardController {
     private final BrandCardService brandCardService;
 
     @PostMapping("/{userId}/{chatRoomId}/brandCard")
-    public ResponseEntity<BrandCardDto> saveBrandCard(@PathVariable Long userId, @PathVariable Long chatRoomId, BrandCardDto brandCardDto) {
+    public ResponseEntity<BrandCardDto> saveBrandCard(@PathVariable Long userId, @PathVariable Long chatRoomId,@RequestBody BrandCardDto brandCardDto) {
         BrandCardDto ret = brandCardService.saveBrandCard(userId, chatRoomId, brandCardDto);
         return new ResponseEntity<>(ret, HttpStatus.OK);
     }
