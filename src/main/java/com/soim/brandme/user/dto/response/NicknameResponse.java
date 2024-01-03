@@ -8,7 +8,6 @@ import lombok.Data;
 public class NicknameResponse {
     private String name;
     private String email;
-    private String image;
-    private String username;
-    private boolean firstLogin;
+    private String picture;
+    private String nickname;
 }

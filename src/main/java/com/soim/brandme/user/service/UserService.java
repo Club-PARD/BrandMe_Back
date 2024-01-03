@@ -5,6 +5,7 @@ import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
 import com.soim.brandme.user.dto.request.NickDto;
 import com.soim.brandme.user.dto.response.AllResultResponse;
+import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.dto.request.UserRequest;
 import com.soim.brandme.user.repo.UserRepo;
@@ -97,13 +98,14 @@ public class UserService {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
         }
     }
-    public UserRequest myProfile(Long id) {
+    public NicknameResponse myProfile(Long id) {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
             User u = user.get();
-            return UserRequest.builder()
+            return NicknameResponse.builder()
                     .name(u.getName())
                     .email(u.getEmail())
+                    .nickname(u.getUsername())
                     .build();
         } else {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");

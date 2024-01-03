@@ -1,5 +1,7 @@
 package com.soim.brandme.chatRoom.controller;
 
+import com.soim.brandme.chatRoom.dto.request.ChatNickDto;
+import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.dto.request.DraftDto;
 import com.soim.brandme.chatRoom.dto.request.GroupKeywordRequest;
 import com.soim.brandme.chatRoom.entity.EmbedGroupKeyword;
@@ -29,13 +31,13 @@ public class ChatRoomController {
         return chatRoomService.createChatRoom(userId);
     }
     @PostMapping("/{userId}/{chatRoomId}/saveChatNickName")
-    public String saveChatNickName(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody String chatNickName){
+    public ChatNickDto saveChatNickName(@PathVariable Long userId, @PathVariable Long chatRoomId, @RequestBody ChatNickDto chatNickName){
         return chatRoomService.saveChatNickName(userId,chatRoomId,chatNickName);
     }
 
     @GetMapping("/{userId}/{chatRoomId}/myResult")
-    public ResponseEntity<ResultResponse> getMyResult(@PathVariable Long userId, @PathVariable Long chatRoomId){
-       ResultResponse result = chatRoomService.getMyResult(userId,chatRoomId);
+    public ResponseEntity<ChatRoomDto> getMyResult(@PathVariable Long userId, @PathVariable Long chatRoomId){
+       ChatRoomDto result = chatRoomService.getMyResult(userId,chatRoomId);
          return ResponseEntity.ok(result);
     }
 

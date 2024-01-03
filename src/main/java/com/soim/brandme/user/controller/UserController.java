@@ -47,8 +47,8 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     @GetMapping("/{userId}/myProfile")
-    public ResponseEntity<UserRequest> getMyProfile(@PathVariable Long userId){
-        UserRequest user = userService.myProfile(userId);
+    public ResponseEntity<NicknameResponse> getMyProfile(@PathVariable Long userId){
+        NicknameResponse user = userService.myProfile(userId);
         return ResponseEntity.ok(user);
     }
     @GetMapping("/{userId}/allMyAnswers")

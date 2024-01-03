@@ -1,5 +1,6 @@
 package com.soim.brandme.chatRoom.service;
 
+import com.soim.brandme.chatRoom.dto.request.ChatNickDto;
 import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.dto.request.DraftDto;
 import com.soim.brandme.chatRoom.dto.request.GroupKeywordRequest;
@@ -13,6 +14,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -66,6 +68,7 @@ public class ChatRoomService {
             ChatRoomDto chatRoomDto = ChatRoomDto.builder()
                     .chatRoomId(ch.getChatRoomId())
                     .progress(ch.getProgress())
+                    .finishChat(ch.isFinishChat())
                     .chatNickName(ch.getChatNickName())
                     .keywords(ch.getKeywords())
                     .answers(ch.getAnswers())
@@ -89,16 +92,19 @@ public class ChatRoomService {
             throw new IllegalArgumentException("해당 유저가 없습니다");
         }
     }
-    public String saveChatNickName(Long userId,Long chatRoomId,String chatNickName){
+    public ChatNickDto saveChatNickName(Long userId, Long chatRoomId, ChatNickDto chatNickName){
         User user = userRepo.findById(userId).orElseThrow(() ->
                 new IllegalArgumentException("해당 유저가 없습니다"));
 
         ChatRoom chatRoom = chatRoomRepo.findById(chatRoomId).orElseThrow(() ->
                 new IllegalArgumentException("해당 채팅방이 없습니다"));
             chatRoom.setUser(user);
-            chatRoom.setChatNickName(chatNickName);
+            chatRoom.setChatNickName(chatNickName.getChatNickName());
             chatRoom = chatRoomRepo.save(chatRoom);
-            return chatRoom.getChatNickName();
+            ChatNickDto chatNickDto = ChatNickDto.builder()
+                    .chatNickName(chatRoom.getChatNickName())
+                    .build();
+            return chatNickDto;
     }
     public String getChatNickName(Long userId,Long chatRoomId){
         User user = userRepo.findById(userId).orElseThrow(() ->
@@ -133,7 +139,7 @@ public class ChatRoomService {
         return chatRoom.getKeywords();
     }
 
-    public ResultResponse getMyResult(Long userId, Long chatRoomId){
+    public ChatRoomDto getMyResult(Long userId, Long chatRoomId){
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다"));
 
@@ -143,12 +149,15 @@ public class ChatRoomService {
         if(!chatRoom.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException("유저와 채팅방이 일치하지 않습니다");
         }
-            return ResultResponse.builder()
+            return ChatRoomDto.builder()
                     .chatRoomId(chatRoom.getChatRoomId())
                     .chatNickName(chatRoom.getChatNickName())
                     .keywords(chatRoom.getKeywords())
                     .answers(chatRoom.getAnswers())
                     .brandCard(chatRoom.getBrandCard())
+                    .finishChat(chatRoom.isFinishChat())
+                    .brandStory(chatRoom.getBrandStory())
+                    .progress(chatRoom.getProgress())
                     .build();
 
     }
@@ -210,7 +219,7 @@ public class ChatRoomService {
                 .answers(chatRoom.getAnswers())
                 .build();
     }
-
+    @Transactional
     public boolean finishChat(Long userId, Long chatRoomId) {
         Optional<User> user = userRepo.findById(userId);
         if(user.isEmpty()){
