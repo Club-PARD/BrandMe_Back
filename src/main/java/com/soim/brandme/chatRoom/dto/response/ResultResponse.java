@@ -1,6 +1,7 @@
 package com.soim.brandme.chatRoom.dto.response;
 
 import com.soim.brandme.brandCard.entity.BrandCard;
+import com.soim.brandme.brandStory.entity.BrandStory;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,4 +15,5 @@ public class ResultResponse {
     private List<String> keywords;
     private List<String> answers;
     private BrandCard brandCard;
+    private BrandStory brandStory;
 }

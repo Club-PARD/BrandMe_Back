@@ -26,6 +26,7 @@ public class BrandStory {
     private String competency;
     private String target;
     private String contentsRecommendation;
+    private String strategy;
     @ElementCollection
     @CollectionTable(name = "brand_keywords", joinColumns = @JoinColumn(name = "brand_story_id"))
     @Column(name = "brand_keyword")

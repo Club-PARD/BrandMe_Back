@@ -32,7 +32,6 @@ public class BrandStoryService {
         }
         ChatRoom chatRoom = chatRoomOpt.get();
        BrandStory brandStory = chatRoom.getBrandStory();
-//        BrandStory brandStory = brandStoryRepo.findByChatRoomId(chatRoomId);
         if (brandStory == null) {
             // BrandStory가 없는 경우, 새로 생성
             brandStory = BrandStory.builder()
@@ -45,6 +44,7 @@ public class BrandStoryService {
                     .brandKeywords(brandStoryResponse.getBrandKeywords())
                     .storyHeadlines(brandStoryResponse.getStoryHeadlines())
                     .storyContents(brandStoryResponse.getStoryContents())
+                    .strategy(brandStoryResponse.getStrategy())
                     .build();
         } else {
             // BrandStory가 이미 있는 경우, 업데이트
@@ -56,6 +56,7 @@ public class BrandStoryService {
             brandStory.setBrandKeywords(brandStoryResponse.getBrandKeywords());
             brandStory.setStoryHeadlines(brandStoryResponse.getStoryHeadlines());
             brandStory.setStoryContents(brandStoryResponse.getStoryContents());
+            brandStory.setStrategy(brandStoryResponse.getStrategy());
         }
 
         brandStoryRepo.save(brandStory); // BrandStory 저장 또는 업데이트
@@ -70,6 +71,7 @@ public class BrandStoryService {
                 .brandKeywords(brandStory.getBrandKeywords())
                 .storyHeadlines(brandStory.getStoryHeadlines())
                 .storyContents(brandStory.getStoryContents())
+                .strategy(brandStory.getStrategy())
                 .build();
     }
 

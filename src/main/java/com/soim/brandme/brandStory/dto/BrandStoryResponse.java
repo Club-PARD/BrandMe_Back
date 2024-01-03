@@ -16,6 +16,7 @@ public class BrandStoryResponse {
     private String identityExplanation;
     private String competency;
     private String target;
+    private String strategy;
     private String contentsRecommendation;
     private List<String> brandKeywords;
     private List<String> storyHeadlines;
