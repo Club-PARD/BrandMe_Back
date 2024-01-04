@@ -67,6 +67,11 @@
     유저 개인 정보 (이메일 및 현재 사용 중인 이름)이 들어가 있으며, 사용 중인 이름을 바꿀 수 있는 페이지.<br>
     <br><p>✨마이페이지✨</p>
     <img width="600" alt="프로필 클릭시-2" src="https://github.com/seongju1015/image/assets/122343583/45b9bfeb-6f75-4678-a42b-100fd48d3232"><br>
+## API 명세서
+<img width="600" alt="image" src="https://github.com/Club-PARD/BrandMe_Back/assets/109461985/322c9b7e-1a5b-4a63-8214-d9c379998ef8">
+<img width="600" alt="image" src="https://github.com/Club-PARD/BrandMe_Back/assets/109461985/c097e0ee-3b1b-4f8b-a742-12f0ffede3f1">
+<img width="600" alt="image" src="https://github.com/Club-PARD/BrandMe_Back/assets/109461985/94d74503-4505-493e-b727-32e61ec58722">
+
 
 ## ERD
 <img width="600" alt="image" src="https://github.com/Club-PARD/BrandMe_Back/assets/109461985/5a51db0d-fbc0-49dd-a39a-e20ae0e4d43a">
