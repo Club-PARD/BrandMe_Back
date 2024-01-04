@@ -65,6 +65,9 @@
     <br><p>✨마이페이지✨</p>
     <img width="600" alt="프로필 클릭시-2" src="https://github.com/seongju1015/image/assets/122343583/45b9bfeb-6f75-4678-a42b-100fd48d3232"><br>
 
+## ERD
+<img width="600" alt="image" src="https://github.com/Club-PARD/BrandMe_Back/assets/109461985/5a51db0d-fbc0-49dd-a39a-e20ae0e4d43a">
+
 
 ## 👥팀 소개 및 팀원이 맡은 역할
 
