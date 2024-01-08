@@ -4,8 +4,10 @@ import com.soim.brandme.auth.service.LoginService;
 import com.soim.brandme.auth.service.Oauth2UserService;
 import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.service.ChatRoomService;
+import com.soim.brandme.user.dto.request.BetaDto;
 import com.soim.brandme.user.dto.request.NickDto;
 import com.soim.brandme.user.dto.response.AllResultResponse;
+import com.soim.brandme.user.dto.response.BetaResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.service.UserService;
 import com.soim.brandme.user.dto.request.UserRequest;
@@ -71,7 +73,12 @@ public class UserController {
         ChatRoomDto ret = chatRoomService.recentChatRoom(userId);
         return ret;
     }
-
+    
+    @GetMapping("/{userId}/beta")
+    public ResponseEntity<BetaResponse> betaTested(@PathVariable Long userId){
+        BetaResponse ret = userService.betaTested(userId);
+        return new ResponseEntity<>(ret,HttpStatus.OK);
+    }
 
 //    프런트에서 axios.get으로 유저 구글로그인+ 유저 정보 요청하면 내가 redirect url로 이동시켜주고 거기서 유저 정보를 받아서 프런트에 보내줌
 //    @GetMapping("/googleLogin")
