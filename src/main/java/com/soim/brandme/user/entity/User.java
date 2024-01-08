@@ -30,12 +30,13 @@ public class User{
     private String password;
     private String username;
     private String locale;
+    private Boolean betaTested;
     @JsonManagedReference
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY,mappedBy = "user")
     private List<ChatRoom> chatRooms;
     @Builder
-    public User(Long id,String name, String email, String role, String password, Boolean firstLogin,
+    public User(Long id,String name, String email, String role, String password, Boolean firstLogin, Boolean betaTested,
         String username,String provider, String providerId,String image,String locale,List<ChatRoom> chatRooms) {
         this.id = id;
         this.name = name;
@@ -49,6 +50,7 @@ public class User{
         this.image = image;
         this.locale = locale;
         this.chatRooms = chatRooms;
+        this.betaTested = (betaTested != null) ? betaTested : false;
     }
 
 }

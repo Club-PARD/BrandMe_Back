@@ -3,8 +3,10 @@ package com.soim.brandme.user.service;
 import com.soim.brandme.auth.dto.resonse.LoginResponse;
 import com.soim.brandme.chatRoom.dto.request.ChatRoomDto;
 import com.soim.brandme.chatRoom.entity.ChatRoom;
+import com.soim.brandme.user.dto.request.BetaDto;
 import com.soim.brandme.user.dto.request.NickDto;
 import com.soim.brandme.user.dto.response.AllResultResponse;
+import com.soim.brandme.user.dto.response.BetaResponse;
 import com.soim.brandme.user.dto.response.NicknameResponse;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.dto.request.UserRequest;
@@ -152,6 +154,22 @@ public class UserService {
 
         } else {
             throw new UsernameNotFoundException("해당 userId로 등록된 계정이 없습니다");
+        }
+    }
+
+    public BetaResponse betaTested(Long userId) {
+        Optional<User> user = userRepo.findById(userId);
+        if (user.isPresent()) {
+            User u = user.get();
+            if(u.getBetaTested()){
+                throw new UsernameNotFoundException("이미 테스트를 완료한 계정입니다");
+            }
+            return BetaResponse.builder()
+                    .email(u.getEmail())
+                    .betaTested(u.getBetaTested())
+                    .build();
+        } else {
+            throw new UsernameNotFoundException("해당 Google email로 등록된 계정이 없습니다");
         }
     }
 //    public ChatRoomDto converToChatRoomDto(ChatRoom chatRoom){
