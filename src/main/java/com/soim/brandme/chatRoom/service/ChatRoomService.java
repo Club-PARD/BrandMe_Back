@@ -8,6 +8,8 @@ import com.soim.brandme.chatRoom.entity.ChatRoom;
 import com.soim.brandme.chatRoom.entity.EmbedGroupKeyword;
 import com.soim.brandme.chatRoom.repo.ChatRoomRepo;
 import com.soim.brandme.chatRoom.dto.response.ResultResponse;
+import com.soim.brandme.exception.BrandOnException;
+import com.soim.brandme.exception.ErrorCode;
 import com.soim.brandme.user.entity.User;
 import com.soim.brandme.user.repo.UserRepo;
 import lombok.Data;
@@ -75,7 +77,7 @@ public class ChatRoomService {
                     .build();
             return chatRoomDto;
         } else {
-            throw new IllegalArgumentException("해당 유저가 없습니다");
+            throw new BrandOnException(ErrorCode.USERID_NOT_FOUND);
         }
     }
 
