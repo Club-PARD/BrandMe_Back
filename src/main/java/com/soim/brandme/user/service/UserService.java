@@ -164,6 +164,9 @@ public class UserService {
             if(u.getBetaTested()){
                 throw new UsernameNotFoundException("이미 테스트를 완료한 계정입니다");
             }
+            if(u.getChatRooms().stream().anyMatch(room -> room.getBrandCard() != null)){
+                u.setBetaTested(true);
+            }
             return BetaResponse.builder()
                     .email(u.getEmail())
                     .betaTested(u.getBetaTested())
